@@ -38,51 +38,139 @@ The Terraform wrapper for RDS simplifies the configuration of the Relational Dat
 ## 🚀 Quick Start
 ```hcl
 rds_parameters = {
-  ## Nombre y definición de una instancia RDS
-  "00" = {
-    
-    ## Definiciones para la creación del motor
-    engine                 = "mariadb"
-    engine_version         = "10.6.14"
-    instance_class         = "db.t3.micro"
-    deletion_protection    = true
-    publicly_accessible    = false
-    
-    ## Definición de subnets sobre las cuales se desplegará y accederá al motor
-    ## Definido por ids
-    subnet_ids             = data.aws_subnets.public.ids
-    ## Definido por nombre
-    # subnet_name = "${local.common_name_prefix}-db*" # Default: "${local.common_name_prefix}-private*"
-    
-    ## Reglas de acceso para el recurso
+  "mariadb-00" = {
+
+    ## Definitions for the database engine
+    engine               = "mariadb"
+    engine_version       = "11.4"
+    major_engine_version = "11.4"
+    family               = "mariadb11.4"
+    instance_class       = "db.t3.micro"
+
+    deletion_protection = false
+    apply_immediately   = true
+    skip_final_snapshot = true
+
+    ## Definitions of subnets where the engine will be deployed and accessed
+    subnet_ids          = data.aws_subnets.public.ids
+    publicly_accessible = true
+
     ingress_with_cidr_blocks = [
       {
         rule        = "mysql-tcp"
-        cidr_blocks = "172.1.0.0/16"
+        cidr_blocks = "0.0.0.0/0" # public IP range, adjust as needed
       }
     ]
-    
-    ## Definición de tamaño y tipo de storage para el motor
-    allocated_storage     = 5
-    max_allocated_storage = 10
-    storage_type          = null
-    
-    ## Parametros que utilizara el motor
+
+    dns_records = {
+      "" = {
+        zone_name    = local.zone_public
+        private_zone = false
+      }
+    }
+
+    ## Database engine parameters
     parameters = [
       {
         name  = "max_connections"
         value = "150"
       }
     ]
-    ## Definiciones de ventanas de mantenimiento y backup
+
+    ## Maintenance windows and backup configuration
     maintenance_window      = "Sun:04:00-Sun:06:00"
     backup_window           = "03:00-03:30"
     backup_retention_period = "7"
-    apply_immediately       = false
-    
-    ## Habilitación y retención de servicio de performance insights
-    #performance_insights_enabled           = false
-    #performance_insights_retention_period  = 7
+
+    ## Optional: monitoring and logs
+    # performance_insights_enabled          = false
+    # performance_insights_retention_period = 7
+    # enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
+  }
+
+  "mysql-00" = {
+
+    ## Definitions for the database engine
+    engine               = "mysql"
+    engine_version       = "8.0.37"
+    major_engine_version = "8.0"
+    family               = "mysql8.0"
+    instance_class       = "db.t3.micro"
+
+    deletion_protection = false
+    apply_immediately   = true
+    skip_final_snapshot = true
+
+    ## Definitions of subnets where the engine will be deployed and accessed
+    subnet_ids          = data.aws_subnets.private.ids
+    publicly_accessible = false
+
+    ingress_with_cidr_blocks = [
+      {
+        rule        = "mysql-tcp"
+        cidr_blocks = "0.0.0.0/0" # public IP range, adjust as needed
+      }
+    ]
+
+    dns_records = {
+      "" = {
+        zone_name    = local.zone_private
+        private_zone = true
+      }
+    }
+
+    ## Maintenance windows and backup configuration
+    maintenance_window      = "Sun:04:00-Sun:06:00"
+    backup_window           = "03:00-03:30"
+    backup_retention_period = "7"
+
+    ## Optional: monitoring and logs
+    # performance_insights_enabled          = false
+    # performance_insights_retention_period = 7
+    # enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
+  }
+
+  "pgsql-00" = {
+
+    ## Definitions for the database engine
+    engine               = "postgres"
+    engine_version       = "16"
+    major_engine_version = "16"
+    family               = "postgres16"
+    instance_class       = "db.t3.micro"
+    port                 = "5432"
+
+    deletion_protection = false
+    apply_immediately   = true
+    skip_final_snapshot = true
+
+    ## Definitions of subnets where the engine will be deployed and accessed
+    subnet_ids          = data.aws_subnets.public.ids
+    publicly_accessible = true
+
+    ingress_with_cidr_blocks = [
+      {
+        rule        = "postgresql-tcp"
+        cidr_blocks = "0.0.0.0/0" # public IP range, adjust as needed
+      }
+    ]
+
+    dns_records = {
+      "" = {
+        zone_name    = local.zone_public
+        private_zone = false
+      }
+    }
+
+    ## Maintenance windows and backup configuration
+    maintenance_window      = "Sun:04:00-Sun:06:00"
+    backup_window           = "03:00-03:30"
+    backup_retention_period = "7"
+
+    ## Optional: monitoring and logs
+    # performance_insights_enabled          = false
+    # performance_insights_retention_period = 7
+    # enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
   }
 }
 
@@ -324,119 +412,119 @@ tags = { ptr-14d = "true" }
 
 
 ## 📑 Inputs
-| Name                                                   | Description                                                            | Type     | Default                                                  | Required |
-| ------------------------------------------------------ | ---------------------------------------------------------------------- | -------- | -------------------------------------------------------- | -------- |
-| engine                                                 | Database engine                                                        | `string` | `"mariadb"`                                              | no       |
-| engine_version                                         | Desired engine version                                                 | `string` | `"10.6.14"`                                              | no       |
-| instance_class                                         | Resource size                                                          | `string` | `"db.t3.micro"`                                          | no       |
-| deletion_protection                                    | Resource deletion protection                                           | `bool`   | `true`                                                   | no       |
-| publicly_accessible                                    | Enable internet access                                                 | `bool`   | `false`                                                  | no       |
-| subnet_ids                                             | List of subnets on which the resource is deployed                      | `list`   | `[]`                                                     | no       |
-| subnet_name                                            | Wildcard to find the subnets where to deploy engine and lambdas        | `string` | `"${local.common_name_prefix}-private*"`                 | no       |
-| ingress_with_cidr_blocks                               | Inbound rules for the resource                                         | `list`   | `[{ rule = "mysql-tcp", cidr_blocks = "172.1.0.0/16" }]` | no       |
-| allocated_storage                                      | Minimum instance storage                                               | `number` | `5`                                                      | no       |
-| max_allocated_storage                                  | Maximum instance storage                                               | `number` | `10`                                                     | no       |
-| storage_type                                           | Storage type                                                           | `string` | `null`                                                   | no       |
-| parameters                                             | Parameter Group definition                                             | `list`   | `[ {   name  = "max_connections, "value = "150" }    ]`  | no       |
-| maintenance_window                                     | Maintenance window schedule                                            | `string` | `"Sun:04:00-Sun:06:00"`                                  | no       |
-| backup_window                                          | Backup window schedule                                                 | `string` | `"03:00-03:30"`                                          | no       |
-| backup_retention_period                                | Backup retention in days                                               | `number` | `"7"`                                                    | no       |
-| apply_immediately                                      | Apply immediately changes that may restart the engine                  | `bool`   | `false`                                                  | no       |
-| performance_insights_enabled                           | Enable Performance Insights feature                                    | `bool`   | `false`                                                  | no       |
-| performance_insights_retention_period                  | Performance Insights information retention                             | `number` | `7`                                                      | no       |
-| username                                               | The master username of the database                                    | `string` | `root`                                                   | no       |
-| password                                               | The master user password generated by the random password resource     | `string` | `generada automáticamente`                               | no       |
-| manage_master_user_password                            | Automatically manage master user password rotation                     | `bool`   | `false`                                                  | no       |
-| master_user_secret_kms_key_id                          | KMS key ID to encrypt the master user secret                           | `string` | `null`                                                   | no       |
-| manage_master_user_password_rotation                   | Enable automatic rotation of the master user password                  | `bool`   | `false`                                                  | no       |
-| master_user_password_rotate_immediately                | Rotate master user password immediately                                | `bool`   | `null`                                                   | no       |
-| master_user_password_rotation_automatically_after_days | Number of days after which the password is rotated automatically       | `number` | `null`                                                   | no       |
-| master_user_password_rotation_duration                 | Duration in days of the password validity after rotation               | `number` | `null`                                                   | no       |
-| master_user_password_rotation_schedule_expression      | Scheduling expression for rotation (example, cron)                     | `string` | `null`                                                   | no       |
-| create_db_subnet_group                                 | Indicates whether a subnet group should be created for the database    | `bool`   | `true`                                                   | no       |
-| db_subnet_group_name                                   | Name of the subnet group for the database                              | `string` | `${local.common_name}-${each.key}`                       | no       |
-| db_subnet_group_use_name_prefix                        | Use a name prefix for the subnet group                                 | `bool`   | `false`                                                  | no       |
-| db_subnet_group_description                            | Subnet group description                                               | `string` | `null`                                                   | no       |
-| db_subnet_group_tags                                   | Tags assigned to the subnet group                                      | `map`    | `{}`                                                     | no       |
-| create_db_parameter_group                              | Indicates whether a parameter group should be created for the database | `bool`   | `true`                                                   | no       |
-| parameter_group_name                                   | Name of the parameter group for the database                           | `string` | `${local.common_name}-${each.key}`                       | no       |
-| parameter_group_use_name_prefix                        | Use a name prefix for the parameter group                              | `bool`   | `false`                                                  | no       |
-| family                                                 | Database family for the parameter group                                | `string` | `mariadb10.6`                                            | no       |
-| parameters                                             | List of parameter group parameters                                     | `list`   | `[]`                                                     | no       |
-| parameter_group_description                            | Parameter group description                                            | `string` | `null`                                                   | no       |
-| db_parameter_group_tags                                | Tags assigned to the parameter group                                   | `map`    | `{}`                                                     | no       |
-| create_db_option_group                                 | Indicates whether an option group should be created for the database   | `bool`   | `true`                                                   | no       |
-| option_group_name                                      | Name of the option group for the database                              | `string` | `${local.common_name}-${each.key}`                       | no       |
-| option_group_use_name_prefix                           | Use a name prefix for the option group                                 | `bool`   | `false`                                                  | no       |
-| major_engine_version                                   | Major engine version for the option group                              | `string` | `10.6`                                                   | no       |
-| options                                                | List of option group options                                           | `list`   | `[]`                                                     | no       |
-| option_group_description                               | Option group description                                               | `string` | `null`                                                   | no       |
-| option_group_timeouts                                  | Timeouts for option group operations                                   | `map`    | `{}`                                                     | no       |
-| db_option_group_tags                                   | Tags assigned to the option group                                      | `map`    | `{}`                                                     | no       |
-| option_group_skip_destroy                              | Whether to prevent the option group from being destroyed               | `bool`   | `null`                                                   | no       |
-| create_db_instance                                     | Indicates whether to create the database instance                      | `bool`   | `true`                                                   | no       |
-| engine_lifecycle_support                               | Database engine lifecycle support                                      | `string` | `null`                                                   | no       |
-| instance_class                                         | Database instance class.                                               | `string` | `db.t3.micro`                                            | no       |
-| port                                                   | Port for database connection.                                          | `number` | `3306`                                                   | no       |
-| db_name                                                | Database name.                                                         | `string` | `null`                                                   | no       |
-| vpc_security_group_ids                                 | List of VPC security group IDs.                                        | `list`   | `[module.security_group_rds]`                            | no       |
-| network_type                                           | Network type for the database.                                         | `string` | `null`                                                   | no       |
-| availability_zone                                      | Availability zone for the database.                                    | `string` | `null`                                                   | no       |
-| multi_az                                               | Enable multi-AZ for high availability.                                 | `bool`   | `false`                                                  | no       |
-| kms_key_id                                             | KMS key ID for database encryption.                                    | `string` | `null`                                                   | no       |
-| ca_cert_identifier                                     | CA certificate identifier for the database.                            | `string` | `null`                                                   | no       |
-| publicly_accessible                                    | Indicates if the database is publicly accessible.                      | `bool`   | `false`                                                  | no       |
-| deletion_protection                                    | Protection against database deletion.                                  | `bool`   | `true`                                                   | no       |
-| timeouts                                               | Timeout settings for the database.                                     | `map`    | `{}`                                                     | no       |
-| snapshot_identifier                                    | Snapshot identifier for database restore.                              | `string` | `null`                                                   | no       |
-| db_instance_tags                                       | Tags assigned to the database instance.                                | `map`    | `{}`                                                     | no       |
-| custom_iam_instance_profile                            | Custom IAM instance profile.                                           | `string` | `null`                                                   | no       |
-| dedicated_log_volume                                   | Indicates if a dedicated volume should be created for database logs.   | `bool`   | `false`                                                  | no       |
-| allocated_storage                                      | Allocated storage for the database.                                    | `number` | `5`                                                      | no       |
-| max_allocated_storage                                  | Maximum allocated storage for the database.                            | `number` | `10`                                                     | no       |
-| storage_type                                           | Storage type (gp2, io1, etc.).                                         | `string` | `null`                                                   | no       |
-| iops                                                   | Number of IOPS allocated for storage.                                  | `number` | `null`                                                   | no       |
-| storage_throughput                                     | Storage performance in MB/s.                                           | `number` | `null`                                                   | no       |
-| storage_encrypted                                      | Indicates if the storage is encrypted.                                 | `bool`   | `true`                                                   | no       |
-| upgrade_storage_config                                 | Configuration for storage upgrade.                                     | `string` | `null`                                                   | no       |
-| iam_database_authentication_enabled                    | Enable IAM authentication for the database.                            | `bool`   | `false`                                                  | no       |
-| domain                                                 | Domain to which the database is associated.                            | `string` | `null`                                                   | no       |
-| domain_auth_secret_arn                                 | ARN of the domain authentication secret.                               | `string` | `null`                                                   | no       |
-| domain_dns_ips                                         | DNS IPs associated with the domain.                                    | `list`   | `null`                                                   | no       |
-| domain_fqdn                                            | FQDN (fully qualified domain name) of the domain.                      | `string` | `null`                                                   | no       |
-| domain_iam_role_name                                   | Name of the IAM role associated with the domain.                       | `string` | `null`                                                   | no       |
-| domain_ou                                              | Organizational unit (OU) of the domain.                                | `string` | `null`                                                   | no       |
-| delete_automated_backups                               | Indicates if automated backups should be deleted.                      | `bool`   | `true`                                                   | no       |
-| restore_to_point_in_time                               | Restore to a specific point in time.                                   | `string` | `null`                                                   | no       |
-| final_snapshot_identifier_prefix                       | Prefix for the final snapshot identifier.                              | `string` | `null`                                                   | no       |
-| skip_final_snapshot                                    | Skip final snapshot creation on instance deletion.                     | `bool`   | `true`                                                   | no       |
-| copy_tags_to_snapshot                                  | Copy tags to the snapshot when creating it.                            | `bool`   | `true`                                                   | no       |
-| maintenance_window                                     | Maintenance window for the RDS instance.                               | `string` | `"Sun:04:00-Sun:06:00"`                                  | no       |
-| allow_major_version_upgrade                            | Allow major version upgrade of the database engine.                    | `bool`   | `false`                                                  | no       |
-| auto_minor_version_upgrade                             | Automatic minor version upgrade.                                       | `bool`   | `true`                                                   | no       |
-| apply_immediately                                      | Apply changes immediately, if possible.                                | `bool`   | `false`                                                  | no       |
-| create_monitoring_role                                 | Create the monitoring role for RDS.                                    | `bool`   | `true`                                                   | no       |
-| monitoring_role_arn                                    | ARN of the existing monitoring role.                                   | `string` | `null`                                                   | no       |
-| monitoring_role_name                                   | Name of the monitoring role.                                           | `string` | `"${local.common_name}-rds-monitoring-${each.key}"`      | no       |
-| monitoring_role_use_name_prefix                        | Use prefix for the monitoring role name.                               | `bool`   | `false`                                                  | no       |
-| monitoring_role_description                            | Description of the monitoring role.                                    | `string` | `null`                                                   | no       |
-| monitoring_interval                                    | Monitoring interval in seconds.                                        | `number` | `0`                                                      | no       |
-| performance_insights_kms_key_id                        | KMS Key ID for Performance Insights.                                   | `string` | `null`                                                   | no       |
-| create_cloudwatch_log_group                            | Create log group in CloudWatch.                                        | `bool`   | `false`                                                  | no       |
-| enabled_cloudwatch_logs_exports                        | Export logs to CloudWatch.                                             | `list`   | `[]`                                                     | no       |
-| cloudwatch_log_group_retention_in_days                 | Log retention in CloudWatch (days).                                    | `number` | `7`                                                      | no       |
-| cloudwatch_log_group_kms_key_id                        | KMS Key ID for the log group in CloudWatch.                            | `string` | `null`                                                   | no       |
-| monitoring_role_permissions_boundary                   | Permission limit for the monitoring role.                              | `string` | `null`                                                   | no       |
-| cloudwatch_log_group_skip_destroy                      | Skip the destruction of the log group in CloudWatch.                   | `bool`   | `null`                                                   | no       |
-| cloudwatch_log_group_class                             | Class of the log group in CloudWatch.                                  | `string` | `null`                                                   | no       |
-| license_model                                          | License model for databases.                                           | `string` | `null`                                                   | no       |
-| timezone                                               | Time zone for SQL Server databases.                                    | `string` | `null`                                                   | no       |
-| replicate_source_db                                    | Source instance name for replication.                                  | `string` | `null`                                                   | no       |
-| replica_mode                                           | Replica mode for the database instance.                                | `string` | `null`                                                   | no       |
-| character_set_name                                     | Name of the database character set.                                    | `string` | `null`                                                   | no       |
-| nchar_character_set_name                               | Name of the NCHAR character set of the database.                       | `string` | `null`                                                   | no       |
-| s3_import                                              | Data import configuration from S3 for MySQL.                           | `string` | `null`                                                   | no       |
-| db_instance_role_associations                          | Database instance role associations (e.g., IAM).                       | `map`    | `{}`                                                     | no       |
+| Name                                                   | Description                                                            | Type           | Default                                                  | Required |
+| ------------------------------------------------------ | ---------------------------------------------------------------------- | -------------- | -------------------------------------------------------- | -------- |
+| engine                                                 | Database engine                                                        | `string`       | `"mariadb"`                                              | no       |
+| engine_version                                         | Desired engine version                                                 | `string`       | `"10.6.14"`                                              | no       |
+| instance_class                                         | Resource size                                                          | `string`       | `"db.t3.micro"`                                          | no       |
+| deletion_protection                                    | Resource deletion protection                                           | `bool`         | `true`                                                   | no       |
+| publicly_accessible                                    | Enable internet access                                                 | `bool`         | `false`                                                  | no       |
+| subnet_ids                                             | List of subnets on which the resource is deployed                      | `list`         | `[]`                                                     | no       |
+| subnet_name                                            | Wildcard to find the subnets where to deploy engine and lambdas        | `string`       | `"${local.common_name_prefix}-private*"`                 | no       |
+| ingress_with_cidr_blocks                               | Inbound rules for the resource                                         | `list`         | `[{ rule = "mysql-tcp", cidr_blocks = "172.1.0.0/16" }]` | no       |
+| allocated_storage                                      | Minimum instance storage                                               | `number`       | `5`                                                      | no       |
+| max_allocated_storage                                  | Maximum instance storage                                               | `number`       | `10`                                                     | no       |
+| storage_type                                           | Storage type                                                           | `string`       | `null`                                                   | no       |
+| maintenance_window                                     | Maintenance window schedule                                            | `string`       | `"Sun:04:00-Sun:06:00"`                                  | no       |
+| backup_window                                          | Backup window schedule                                                 | `string`       | `null`                                                   | no       |
+| backup_retention_period                                | Backup retention in days                                               | `number`       | `null`                                                   | no       |
+| apply_immediately                                      | Apply immediately changes that may restart the engine                  | `bool`         | `false`                                                  | no       |
+| performance_insights_enabled                           | Enable Performance Insights feature                                    | `bool`         | `false`                                                  | no       |
+| performance_insights_retention_period                  | Performance Insights information retention                             | `number`       | `7`                                                      | no       |
+| username                                               | The master username of the database                                    | `string`       | `root`                                                   | no       |
+| password                                               | The master user password generated by the random password resource     | `string`       | `${random_password.this[each.key].result}`               | no       |
+| manage_master_user_password                            | Automatically manage master user password rotation                     | `bool`         | `false`                                                  | no       |
+| master_user_secret_kms_key_id                          | KMS key ID to encrypt the master user secret                           | `string`       | `null`                                                   | no       |
+| manage_master_user_password_rotation                   | Enable automatic rotation of the master user password                  | `bool`         | `false`                                                  | no       |
+| master_user_password_rotate_immediately                | Rotate master user password immediately                                | `bool`         | `null`                                                   | no       |
+| master_user_password_rotation_automatically_after_days | Number of days after which the password is rotated automatically       | `number`       | `null`                                                   | no       |
+| master_user_password_rotation_duration                 | Duration in days of the password validity after rotation               | `number`       | `null`                                                   | no       |
+| master_user_password_rotation_schedule_expression      | Scheduling expression for rotation (example, cron)                     | `string`       | `null`                                                   | no       |
+| create_db_subnet_group                                 | Indicates whether a subnet group should be created for the database    | `bool`         | `true`                                                   | no       |
+| db_subnet_group_name                                   | Name of the subnet group for the database                              | `string`       | `${local.common_name}-${each.key}`                       | no       |
+| db_subnet_group_use_name_prefix                        | Use a name prefix for the subnet group                                 | `bool`         | `false`                                                  | no       |
+| db_subnet_group_description                            | Subnet group description                                               | `string`       | `null`                                                   | no       |
+| db_subnet_group_tags                                   | Tags assigned to the subnet group                                      | `map`          | `{}`                                                     | no       |
+| create_db_parameter_group                              | Indicates whether a parameter group should be created for the database | `bool`         | `true`                                                   | no       |
+| parameter_group_name                                   | Name of the parameter group for the database                           | `string`       | `${local.common_name}-${each.key}`                       | no       |
+| parameter_group_use_name_prefix                        | Use a name prefix for the parameter group                              | `bool`         | `false`                                                  | no       |
+| family                                                 | Database family for the parameter group                                | `string`       | `mariadb10.6`                                            | no       |
+| parameters                                             | List of parameter group parameters                                     | `list`         | `[]`                                                     | no       |
+| parameter_group_description                            | Parameter group description                                            | `string`       | `null`                                                   | no       |
+| db_parameter_group_tags                                | Tags assigned to the parameter group                                   | `map`          | `{}`                                                     | no       |
+| create_db_option_group                                 | Indicates whether an option group should be created for the database   | `bool`         | `true`                                                   | no       |
+| option_group_name                                      | Name of the option group for the database                              | `string`       | `${local.common_name}-${each.key}`                       | no       |
+| option_group_use_name_prefix                           | Use a name prefix for the option group                                 | `bool`         | `false`                                                  | no       |
+| major_engine_version                                   | Major engine version for the option group                              | `string`       | `10.6`                                                   | no       |
+| options                                                | List of option group options                                           | `list`         | `[]`                                                     | no       |
+| option_group_description                               | Option group description                                               | `string`       | `null`                                                   | no       |
+| option_group_timeouts                                  | Timeouts for option group operations                                   | `map`          | `{}`                                                     | no       |
+| db_option_group_tags                                   | Tags assigned to the option group                                      | `map`          | `{}`                                                     | no       |
+| option_group_skip_destroy                              | Whether to prevent the option group from being destroyed               | `bool`         | `null`                                                   | no       |
+| create_db_instance                                     | Indicates whether to create the database instance                      | `bool`         | `true`                                                   | no       |
+| engine_lifecycle_support                               | Database engine lifecycle support                                      | `string`       | `null`                                                   | no       |
+| instance_class                                         | Database instance class.                                               | `string`       | `db.t3.micro`                                            | no       |
+| port                                                   | Port for database connection.                                          | `number`       | `3306`                                                   | no       |
+| db_name                                                | Database name.                                                         | `string`       | `null`                                                   | no       |
+| vpc_security_group_ids                                 | List of VPC security group IDs.                                        | `list(string)` | `[module.security_group_rds]`                            | no       |
+| network_type                                           | Network type for the database.                                         | `string`       | `null`                                                   | no       |
+| availability_zone                                      | Availability zone for the database.                                    | `string`       | `null`                                                   | no       |
+| multi_az                                               | Enable multi-AZ for high availability.                                 | `bool`         | `false`                                                  | no       |
+| kms_key_id                                             | KMS key ID for database encryption.                                    | `string`       | `null`                                                   | no       |
+| ca_cert_identifier                                     | CA certificate identifier for the database.                            | `string`       | `null`                                                   | no       |
+| publicly_accessible                                    | Indicates if the database is publicly accessible.                      | `bool`         | `false`                                                  | no       |
+| deletion_protection                                    | Protection against database deletion.                                  | `bool`         | `true`                                                   | no       |
+| timeouts                                               | Timeout settings for the database.                                     | `map`          | `{}`                                                     | no       |
+| snapshot_identifier                                    | Snapshot identifier for database restore.                              | `string`       | `null`                                                   | no       |
+| db_instance_tags                                       | Tags assigned to the database instance.                                | `map`          | `{}`                                                     | no       |
+| custom_iam_instance_profile                            | Custom IAM instance profile.                                           | `string`       | `null`                                                   | no       |
+| dedicated_log_volume                                   | Indicates if a dedicated volume should be created for database logs.   | `bool`         | `false`                                                  | no       |
+| allocated_storage                                      | Allocated storage for the database.                                    | `number`       | `5`                                                      | no       |
+| max_allocated_storage                                  | Maximum allocated storage for the database.                            | `number`       | `10`                                                     | no       |
+| storage_type                                           | Storage type (gp2, io1, etc.).                                         | `string`       | `null`                                                   | no       |
+| iops                                                   | Number of IOPS allocated for storage.                                  | `number`       | `null`                                                   | no       |
+| storage_throughput                                     | Storage performance in MB/s.                                           | `number`       | `null`                                                   | no       |
+| storage_encrypted                                      | Indicates if the storage is encrypted.                                 | `bool`         | `true`                                                   | no       |
+| upgrade_storage_config                                 | Configuration for storage upgrade.                                     | `string`       | `null`                                                   | no       |
+| iam_database_authentication_enabled                    | Enable IAM authentication for the database.                            | `bool`         | `false`                                                  | no       |
+| domain                                                 | Domain to which the database is associated.                            | `string`       | `null`                                                   | no       |
+| domain_auth_secret_arn                                 | ARN of the domain authentication secret.                               | `string`       | `null`                                                   | no       |
+| domain_dns_ips                                         | DNS IPs associated with the domain.                                    | `list`         | `null`                                                   | no       |
+| domain_fqdn                                            | FQDN (fully qualified domain name) of the domain.                      | `string`       | `null`                                                   | no       |
+| domain_iam_role_name                                   | Name of the IAM role associated with the domain.                       | `string`       | `null`                                                   | no       |
+| domain_ou                                              | Organizational unit (OU) of the domain.                                | `string`       | `null`                                                   | no       |
+| delete_automated_backups                               | Indicates if automated backups should be deleted.                      | `bool`         | `true`                                                   | no       |
+| restore_to_point_in_time                               | Restore to a specific point in time.                                   | `string`       | `null`                                                   | no       |
+| final_snapshot_identifier_prefix                       | Prefix for the final snapshot identifier.                              | `string`       | `null`                                                   | no       |
+| skip_final_snapshot                                    | Skip final snapshot creation on instance deletion.                     | `bool`         | `true`                                                   | no       |
+| copy_tags_to_snapshot                                  | Copy tags to the snapshot when creating it.                            | `bool`         | `true`                                                   | no       |
+| maintenance_window                                     | Maintenance window for the RDS instance.                               | `string`       | `"Sun:04:00-Sun:06:00"`                                  | no       |
+| allow_major_version_upgrade                            | Allow major version upgrade of the database engine.                    | `bool`         | `false`                                                  | no       |
+| auto_minor_version_upgrade                             | Automatic minor version upgrade.                                       | `bool`         | `true`                                                   | no       |
+| apply_immediately                                      | Apply changes immediately, if possible.                                | `bool`         | `false`                                                  | no       |
+| create_monitoring_role                                 | Create the monitoring role for RDS.                                    | `bool`         | `true`                                                   | no       |
+| monitoring_role_arn                                    | ARN of the existing monitoring role.                                   | `string`       | `null`                                                   | no       |
+| monitoring_role_name                                   | Name of the monitoring role.                                           | `string`       | `"${local.common_name}-rds-monitoring-${each.key}"`      | no       |
+| monitoring_role_use_name_prefix                        | Use prefix for the monitoring role name.                               | `bool`         | `false`                                                  | no       |
+| monitoring_role_description                            | Description of the monitoring role.                                    | `string`       | `null`                                                   | no       |
+| monitoring_interval                                    | Monitoring interval in seconds.                                        | `number`       | `0`                                                      | no       |
+| performance_insights_kms_key_id                        | KMS Key ID for Performance Insights.                                   | `string`       | `null`                                                   | no       |
+| create_cloudwatch_log_group                            | Create log group in CloudWatch.                                        | `bool`         | `false`                                                  | no       |
+| enabled_cloudwatch_logs_exports                        | Export logs to CloudWatch.                                             | `list`         | `[]`                                                     | no       |
+| cloudwatch_log_group_retention_in_days                 | Log retention in CloudWatch (days).                                    | `number`       | `7`                                                      | no       |
+| cloudwatch_log_group_kms_key_id                        | KMS Key ID for the log group in CloudWatch.                            | `string`       | `null`                                                   | no       |
+| monitoring_role_permissions_boundary                   | Permission limit for the monitoring role.                              | `string`       | `null`                                                   | no       |
+| cloudwatch_log_group_skip_destroy                      | Skip the destruction of the log group in CloudWatch.                   | `bool`         | `null`                                                   | no       |
+| cloudwatch_log_group_class                             | Class of the log group in CloudWatch.                                  | `string`       | `null`                                                   | no       |
+| license_model                                          | License model for databases.                                           | `string`       | `null`                                                   | no       |
+| timezone                                               | Time zone for SQL Server databases.                                    | `string`       | `null`                                                   | no       |
+| replicate_source_db                                    | Source instance name for replication.                                  | `string`       | `null`                                                   | no       |
+| replica_mode                                           | Replica mode for the database instance.                                | `string`       | `null`                                                   | no       |
+| character_set_name                                     | Name of the database character set.                                    | `string`       | `null`                                                   | no       |
+| nchar_character_set_name                               | Name of the NCHAR character set of the database.                       | `string`       | `null`                                                   | no       |
+| s3_import                                              | Data import configuration from S3 for MySQL.                           | `string`       | `null`                                                   | no       |
+| db_instance_role_associations                          | Database instance role associations (e.g., IAM).                       | `map`          | `{}`                                                     | no       |
+| tags                                                   | Custom tags to assign to resources                                     | `map`          | `null`                                                   | no       |
 
 
 
@@ -445,10 +533,9 @@ tags = { ptr-14d = "true" }
 
 
 ## ⚠️ Important Notes
-- **🚨 Restart Engine During Changes:** Restart the engine during parameter group changes - set `apply_immediately = true`
-- **⚠️ Public Access:** Exposes the resource to the internet - set `publicly_accessible = true`
-- **⚠️ Overwrite Database Data:** Allows overwriting database contents within the engine - set `allow_overwrite = true`
-- **ℹ️ Storage Growth Limit:** Enables unlimited storage growth - set `max_allocated_storage = null`
+- **🚨 Engine Restart:** Parameter changes won't restart the database automatically. Use `apply_immediately = true` to apply changes immediately.
+- **⚠️ Public Access:** Control internet exposure of the instance with `publicly_accessible = true` or `false`.
+- **ℹ️ Storage Growth:** Set `max_allocated_storage = 0` to allow unlimited storage growth.
 
 
 
