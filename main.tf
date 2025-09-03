@@ -50,7 +50,7 @@ module "rds" {
   ## instance
   create_db_instance          = try(each.value.create_db_instance, var.rds_defaults.create_db_instance, true)
   engine                      = try(each.value.engine, var.rds_defaults.engine, "mariadb")
-  engine_version              = try(each.value.engine_version, var.rds_defaults.engine_version, "10.6.11")
+  engine_version              = try(each.value.engine_version, var.rds_defaults.engine_version, "10.6.14")
   engine_lifecycle_support    = try(each.value.engine_lifecycle_support, var.rds_defaults.engine_lifecycle_support, null)
   instance_class              = try(each.value.instance_class, var.rds_defaults.instance_class, "db.t3.micro")
   port                        = try(each.value.port, var.rds_defaults.port, 3306)
