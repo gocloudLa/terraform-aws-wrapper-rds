@@ -51,8 +51,8 @@ module "wrapper_rds" {
       db_dump_create_db_name             = "mydb1"
       db_dump_create_retention_in_days   = 7
       db_dump_create_s3_arn_permission_accounts = [
-        "arn:aws:iam::565219270600:root", # gocloud.la-democorp
-        # "arn:aws:iam::xxxxxxxxxxx:root", # demo.la-stg
+        "arn:aws:iam::123456789012:root", # Replace with the actual 12-digit ID of your AWS account.
+        # "arn:aws:iam::xxxxxxxxxxx:root",
       ]
 
       ## ENABLE DB RESTORE FROM S3
