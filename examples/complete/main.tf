@@ -2,7 +2,6 @@ module "wrapper_rds" {
   source = "../../"
 
   metadata = local.metadata
-  project  = local.project
 
   rds_parameters = {
     "mariadb-00" = {
