@@ -81,11 +81,6 @@ rds_parameters = {
     maintenance_window      = "Sun:04:00-Sun:06:00"
     backup_window           = "03:00-03:30"
     backup_retention_period = "7"
-
-    ## Optional: monitoring and logs
-    # performance_insights_enabled          = false
-    # performance_insights_retention_period = 7
-    # enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
   }
 
   "mysql-00" = {
@@ -123,11 +118,6 @@ rds_parameters = {
     maintenance_window      = "Sun:04:00-Sun:06:00"
     backup_window           = "03:00-03:30"
     backup_retention_period = "7"
-
-    ## Optional: monitoring and logs
-    # performance_insights_enabled          = false
-    # performance_insights_retention_period = 7
-    # enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
   }
 
   "pgsql-00" = {
@@ -166,11 +156,6 @@ rds_parameters = {
     maintenance_window      = "Sun:04:00-Sun:06:00"
     backup_window           = "03:00-03:30"
     backup_retention_period = "7"
-
-    ## Optional: monitoring and logs
-    # performance_insights_enabled          = false
-    # performance_insights_retention_period = 7
-    # enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
   }
 }
 
