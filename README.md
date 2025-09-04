@@ -316,7 +316,7 @@ rds_parameters = {
 
 
 ### Dump with S3
-This module creates the necessary resources to generate an SQL dump and store it in an S3 bucket, along with cleanup scripts for the database. <br/> It supports the database engines **MySQL**, **MariaDB**, and **PostgreSQL**.
+This module creates the necessary resources to generate an SQL dump and store it in an S3 bucket, along with cleanup scripts for the database. It also allows to specify which AWS account ARNs have access to the S3 bucket. <br/> It supports the database engines **MySQL**, **MariaDB**, and **PostgreSQL**.
 
 
 <details><summary>Configuration Code</summary>
