@@ -284,7 +284,7 @@ features:
     title: Dump with S3
     short_description: Generates SQL dumps and stores them in S3 for MySQL, MariaDB, and PostgreSQL
     long_description: |
-      This module creates the necessary resources to generate an SQL dump and store it in an S3 bucket, along with cleanup scripts for the database. <br/> It supports the database engines **MySQL**, **MariaDB**, and **PostgreSQL**.
+      This module creates the necessary resources to generate an SQL dump and store it in an S3 bucket, along with cleanup scripts for the database. It also allows to specify which AWS account ARNs have access to the S3 bucket. <br/> It supports the database engines **MySQL**, **MariaDB**, and **PostgreSQL**.
     examples:
       - title: Configuration Code
         code: |
