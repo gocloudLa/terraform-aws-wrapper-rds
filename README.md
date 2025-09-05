@@ -509,7 +509,7 @@ tags = { ptr-14d = "true" }
 | nchar_character_set_name                               | Name of the NCHAR character set of the database.                       | `string`       | `null`                                                   | no       |
 | s3_import                                              | Data import configuration from S3 for MySQL.                           | `string`       | `null`                                                   | no       |
 | db_instance_role_associations                          | Database instance role associations (e.g., IAM).                       | `map`          | `{}`                                                     | no       |
-| tags                                                   | Custom tags to assign to resources                                     | `map`          | `null`                                                   | no       |
+| tags                                                   | A map of tags to assign to resources.                                  | `map`          | `{}`                                                     | no       |
 
 
 
