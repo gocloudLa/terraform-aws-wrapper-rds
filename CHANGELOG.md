@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.0.0...v1.0.1) (2025-10-11)
+
+
+### Bug Fixes
+
+* **versions:** remove unused random ([#7](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/7)) ([c02f359](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/c02f359655735cd103768d72e6acf0e808b4d112))
+
 ## 1.0.0 (2025-09-05)
 
 
