@@ -146,8 +146,8 @@ locals {
           dimensions = try(value.dimensions, {
             DBInstanceIdentifier = "${local.common_name}-${rds_name}"
           })
-          ok_actions    = []
-          alarm_actions = []
+          ok_actions    = try(value.ok_actions, [])
+          alarm_actions = try(value.alarm_actions, [])
           alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-rds-name" = "${local.common_name}-${rds_name}" })
       }) if can(var.rds_parameters) && var.rds_parameters != {} && try(values.enable_alarms, false) && !contains(try(values.alarms_disabled, []), alarm)
     }
@@ -171,8 +171,8 @@ locals {
           dimensions = try(value.dimensions, {
             DBInstanceIdentifier = "${local.common_name}-${rds_name}"
           })
-          ok_actions    = []
-          alarm_actions = []
+          ok_actions    = try(value.ok_actions, [])
+          alarm_actions = try(value.alarm_actions, [])
           alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-rds-name" = "${local.common_name}-${rds_name}" })
         }
       ) if can(var.rds_parameters) && var.rds_parameters != {} && try(values.enable_alarms, false)

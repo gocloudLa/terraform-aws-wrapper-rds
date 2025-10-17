@@ -262,36 +262,36 @@ module "wrapper_rds" {
       #alarms_disabled = ["critical-CPUUtilization", "warning-CPUUtilization"] # if you need to disable an alarm
 
       alarms_custom = {
-        # "warning-FreeableMemory" = {
-        #   description = "FreeableMemory below 350 MB"
-        #   threshold   = 367001600
-        #   unit        = "Bytes"
-        #   metric_name = "FreeableMemory"
-        #   statistic   = "Average"
-        #   namespace   = "AWS/RDS"
-        #   period      = 60
-        #   evaluation_periods = 15
-        #   datapoints_to_alarm = 15
-        #   comparison_operator = "LessThanThreshold"
-        #   alarms_tags = {
-        #     "alarm-level" = "WARN"
-        #   }
-        # }
-        # "critical-FreeableMemory" = {
-        #   description = "FreeableMemory below 250 MB"
-        #   threshold   = 262144000
-        #   unit        = "Bytes"
-        #   metric_name = "FreeableMemory"
-        #   statistic   = "Average"
-        #   namespace   = "AWS/RDS"
-        #   period      = 60
-        #   evaluation_periods = 15
-        #   datapoints_to_alarm = 15
-        #   comparison_operator = "LessThanThreshold"
-        #   alarms_tags = {
-        #     "alarm-level" = "WARN"
-        #   }
-        # }
+      #   "warning-FreeableMemory" = {
+      #     description = "FreeableMemory below 350 MB"
+      #     threshold   = 367001600
+      #     unit        = "Bytes"
+      #     metric_name = "FreeableMemory"
+      #     statistic   = "Average"
+      #     namespace   = "AWS/RDS"
+      #     period      = 60
+      #     evaluation_periods = 15
+      #     datapoints_to_alarm = 15
+      #     comparison_operator = "LessThanThreshold"
+      #     alarms_tags = {
+      #       "alarm-level" = "WARN"
+      #     }
+      #   }
+      #   "critical-FreeableMemory" = {
+      #     description = "FreeableMemory below 250 MB"
+      #     threshold   = 262144000
+      #     unit        = "Bytes"
+      #     metric_name = "FreeableMemory"
+      #     statistic   = "Average"
+      #     namespace   = "AWS/RDS"
+      #     period      = 60
+      #     evaluation_periods = 15
+      #     datapoints_to_alarm = 15
+      #     comparison_operator = "LessThanThreshold"
+      #     alarms_tags = {
+      #       "alarm-level" = "WARN"
+      #     }
+      #   }
       }
 
       # DEBUG
