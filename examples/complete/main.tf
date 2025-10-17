@@ -246,6 +246,54 @@ module "wrapper_rds" {
 
       port = "5432"
 
+      # ALARMS CONFIGURATION
+      enable_alarms = true # Default: false
+
+      alarms_overrides = {
+        # "warning-CPUUtilization" = {
+        #   "actions_enabled"    = true
+        #   "evaluation_periods" = 2
+        #   "threshold"          = 30
+        #   "period"             = 180
+        #   "treat_missing_data" = "ignore"
+        # }
+      }
+
+      #alarms_disabled = ["critical-CPUUtilization", "warning-CPUUtilization"] # if you need to disable an alarm
+
+      alarms_custom = {
+        # "warning-FreeableMemory" = {
+        #   description = "FreeableMemory below 350 MB"
+        #   threshold   = 367001600
+        #   unit        = "Bytes"
+        #   metric_name = "FreeableMemory"
+        #   statistic   = "Average"
+        #   namespace   = "AWS/RDS"
+        #   period      = 60
+        #   evaluation_periods = 15
+        #   datapoints_to_alarm = 15
+        #   comparison_operator = "LessThanThreshold"
+        #   alarms_tags = {
+        #     "alarm-level" = "WARN"
+        #   }
+        # }
+        # "critical-FreeableMemory" = {
+        #   description = "FreeableMemory below 250 MB"
+        #   threshold   = 262144000
+        #   unit        = "Bytes"
+        #   metric_name = "FreeableMemory"
+        #   statistic   = "Average"
+        #   namespace   = "AWS/RDS"
+        #   period      = 60
+        #   evaluation_periods = 15
+        #   datapoints_to_alarm = 15
+        #   comparison_operator = "LessThanThreshold"
+        #   alarms_tags = {
+        #     "alarm-level" = "WARN"
+        #   }
+        # }
+      }
+
       # DEBUG
       deletion_protection = false
       apply_immediately   = true
