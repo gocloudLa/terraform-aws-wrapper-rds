@@ -1,37 +1,37 @@
 locals {
   alarms_default = {
     "warning-CPUUtilization" = {
-      description = "is using more than 75% of CPU"
-      threshold   = 75
-      unit        = "Percent"
-      metric_name = "CPUUtilization"
-      statistic   = "Average"
-      namespace   = "AWS/RDS"
+      description         = "is using more than 75% of CPU"
+      threshold           = 75
+      unit                = "Percent"
+      metric_name         = "CPUUtilization"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
       }
     }
     "critical-CPUUtilization" = {
-      description = "is using more than 90% of CPU"
-      threshold   = 90
-      unit        = "Percent"
-      metric_name = "CPUUtilization"
-      statistic   = "Average"
-      namespace   = "AWS/RDS"
+      description         = "is using more than 90% of CPU"
+      threshold           = 90
+      unit                = "Percent"
+      metric_name         = "CPUUtilization"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
     }
     "warning-EBSByteBalance" = {
-      description = "is less than 20% of EBSByte"
-      threshold   = 20
-      unit        = "Percent"
-      metric_name = "EBSByteBalance%"
-      statistic   = "Average"
-      namespace   = "AWS/RDS"
-      evaluation_periods = 3
+      description         = "is less than 20% of EBSByte"
+      threshold           = 20
+      unit                = "Percent"
+      metric_name         = "EBSByteBalance%"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
+      evaluation_periods  = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -39,13 +39,13 @@ locals {
       }
     }
     "critical-EBSByteBalance" = {
-      description = "is less than 10% of EBSByte"
-      threshold   = 10
-      unit        = "Percent"
-      metric_name = "EBSByteBalance%"
-      statistic   = "Average"
-      namespace   = "AWS/RDS"
-      evaluation_periods = 3
+      description         = "is less than 10% of EBSByte"
+      threshold           = 10
+      unit                = "Percent"
+      metric_name         = "EBSByteBalance%"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
+      evaluation_periods  = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -53,13 +53,13 @@ locals {
       }
     }
     "warning-EBSIOBalance" = {
-      description = "is less than 20% of EBSIO"
-      threshold   = 20
-      unit        = "Percent"
-      metric_name = "EBSIOBalance%"
-      statistic   = "Average"
-      namespace   = "AWS/RDS"
-      evaluation_periods = 3
+      description         = "is less than 20% of EBSIO"
+      threshold           = 20
+      unit                = "Percent"
+      metric_name         = "EBSIOBalance%"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
+      evaluation_periods  = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -67,13 +67,13 @@ locals {
       }
     }
     "critical-EBSIOBalance" = {
-      description = "is less than 10% of EBSIO"
-      threshold   = 10
-      unit        = "Percent"
-      metric_name = "EBSIOBalance%"
-      statistic   = "Average"
-      namespace   = "AWS/RDS"
-      evaluation_periods = 3
+      description         = "is less than 10% of EBSIO"
+      threshold           = 10
+      unit                = "Percent"
+      metric_name         = "EBSIOBalance%"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
+      evaluation_periods  = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -81,48 +81,48 @@ locals {
       }
     }
     "warning-ReadLatency" = {
-      description = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold   = 0.01
-      unit        = "Seconds"
-      metric_name = "ReadLatency"
-      extended_statistic   = "p90"
-      namespace   = "AWS/RDS"
+      description         = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold           = 0.01
+      unit                = "Seconds"
+      metric_name         = "ReadLatency"
+      extended_statistic  = "p90"
+      namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
       }
     }
     "critical-ReadLatency" = {
-      description = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold   = 0.02
-      unit        = "Seconds"
-      metric_name = "ReadLatency"
-      extended_statistic   = "p90"
-      namespace   = "AWS/RDS"
+      description         = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold           = 0.02
+      unit                = "Seconds"
+      metric_name         = "ReadLatency"
+      extended_statistic  = "p90"
+      namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
     }
-      "warning-WriteLatency" = {
-      description = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold   = 0.01
-      unit        = "Seconds"
-      metric_name = "WriteLatency"
-      extended_statistic   = "p90"
-      namespace   = "AWS/RDS"
+    "warning-WriteLatency" = {
+      description         = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold           = 0.01
+      unit                = "Seconds"
+      metric_name         = "WriteLatency"
+      extended_statistic  = "p90"
+      namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
       }
     }
     "critical-WriteLatency" = {
-      description = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold   = 0.02
-      unit        = "Seconds"
-      metric_name = "WriteLatency"
-      extended_statistic   = "p90"
-      namespace   = "AWS/RDS"
+      description         = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold           = 0.02
+      unit                = "Seconds"
+      metric_name         = "WriteLatency"
+      extended_statistic  = "p90"
+      namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
@@ -223,8 +223,8 @@ resource "aws_cloudwatch_metric_alarm" "alarms" {
   dimensions          = try(each.value.dimensions, var.rds_defaults.alarms_defaults.dimensions, null)
   treat_missing_data  = try(each.value.treat_missing_data, var.rds_defaults.alarms_defaults.treat_missing_data, "notBreaching")
 
-  alarm_actions = concat(try([data.aws_sns_topic.alarms_sns_topic_name[0].arn], []), try(each.value.alarm_actions, var.rds_defaults.alarms_defaults.alarm_actions, []))
-  ok_actions    = concat(try([data.aws_sns_topic.alarms_sns_topic_name[0].arn], []), try(each.value.ok_actions, var.rds_defaults.alarms_defaults.ok_actions, []))
+  alarm_actions = try(each.value.alarm_actions, var.rds_defaults.alarms_defaults.alarm_actionss, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
+  ok_actions    = try(each.value.ok_actions, var.rds_defaults.alarms_defaults.ok_actions, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
 
   # conflicts with metric_name
   dynamic "metric_query" {
