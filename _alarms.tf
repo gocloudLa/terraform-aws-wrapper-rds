@@ -223,7 +223,7 @@ resource "aws_cloudwatch_metric_alarm" "alarms" {
   dimensions          = try(each.value.dimensions, var.rds_defaults.alarms_defaults.dimensions, null)
   treat_missing_data  = try(each.value.treat_missing_data, var.rds_defaults.alarms_defaults.treat_missing_data, "notBreaching")
 
-  alarm_actions = try(each.value.alarm_actions, var.rds_defaults.alarms_defaults.alarm_actionss, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
+  alarm_actions = try(each.value.alarm_actions, var.rds_defaults.alarms_defaults.alarm_actions, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
   ok_actions    = try(each.value.ok_actions, var.rds_defaults.alarms_defaults.ok_actions, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
 
   # conflicts with metric_name
