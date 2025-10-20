@@ -1,6 +1,6 @@
 module "lambda_create_dump" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "8.0.1"
+  version = "8.1.0"
 
   count = local.condition_create ? 1 : 0
 
@@ -69,7 +69,7 @@ resource "aws_lambda_layer_version" "this" {
 
 module "s3_create_dump" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "5.2.0"
+  version = "5.8.1"
 
   count = local.condition_create ? 1 : 0
 
@@ -118,7 +118,7 @@ module "s3_create_dump" {
 
 module "s3_dump_objects" {
   source  = "terraform-aws-modules/s3-bucket/aws//modules/object"
-  version = "5.2.0"
+  version = "5.8.1"
 
   for_each    = local.condition_create_s3_dump_objects ? fileset(var.local_path_custom_scripts, "**") : []
   bucket      = module.s3_create_dump[0].s3_bucket_id
@@ -129,7 +129,7 @@ module "s3_dump_objects" {
 
 module "eventbridge_create_dump" {
   source  = "terraform-aws-modules/eventbridge/aws"
-  version = "4.1.0"
+  version = "4.2.1"
 
   count = local.condition_create ? 1 : 0
 
