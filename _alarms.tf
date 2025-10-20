@@ -1,37 +1,37 @@
 locals {
   alarms_default = {
     "warning-CPUUtilization" = {
-      description         = "is using more than 75% of CPU"
-      threshold           = 75
-      unit                = "Percent"
-      metric_name         = "CPUUtilization"
-      statistic           = "Average"
-      namespace           = "AWS/RDS"
+      description = "is using more than 75% of CPU"
+      threshold   = 75
+      unit        = "Percent"
+      metric_name = "CPUUtilization"
+      statistic   = "Average"
+      namespace   = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
       }
     }
     "critical-CPUUtilization" = {
-      description         = "is using more than 90% of CPU"
-      threshold           = 90
-      unit                = "Percent"
-      metric_name         = "CPUUtilization"
-      statistic           = "Average"
-      namespace           = "AWS/RDS"
+      description = "is using more than 90% of CPU"
+      threshold   = 90
+      unit        = "Percent"
+      metric_name = "CPUUtilization"
+      statistic   = "Average"
+      namespace   = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
     }
     "warning-EBSByteBalance" = {
-      description         = "is less than 20% of EBSByte"
-      threshold           = 20
-      unit                = "Percent"
-      metric_name         = "EBSByteBalance%"
-      statistic           = "Average"
-      namespace           = "AWS/RDS"
-      evaluation_periods  = 3
+      description = "is less than 20% of EBSByte"
+      threshold   = 20
+      unit        = "Percent"
+      metric_name = "EBSByteBalance%"
+      statistic   = "Average"
+      namespace   = "AWS/RDS"
+      evaluation_periods = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -39,13 +39,13 @@ locals {
       }
     }
     "critical-EBSByteBalance" = {
-      description         = "is less than 10% of EBSByte"
-      threshold           = 10
-      unit                = "Percent"
-      metric_name         = "EBSByteBalance%"
-      statistic           = "Average"
-      namespace           = "AWS/RDS"
-      evaluation_periods  = 3
+      description = "is less than 10% of EBSByte"
+      threshold   = 10
+      unit        = "Percent"
+      metric_name = "EBSByteBalance%"
+      statistic   = "Average"
+      namespace   = "AWS/RDS"
+      evaluation_periods = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -53,13 +53,13 @@ locals {
       }
     }
     "warning-EBSIOBalance" = {
-      description         = "is less than 20% of EBSIO"
-      threshold           = 20
-      unit                = "Percent"
-      metric_name         = "EBSIOBalance%"
-      statistic           = "Average"
-      namespace           = "AWS/RDS"
-      evaluation_periods  = 3
+      description = "is less than 20% of EBSIO"
+      threshold   = 20
+      unit        = "Percent"
+      metric_name = "EBSIOBalance%"
+      statistic   = "Average"
+      namespace   = "AWS/RDS"
+      evaluation_periods = 3
       datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
@@ -67,87 +67,93 @@ locals {
       }
     }
     "critical-EBSIOBalance" = {
-      description         = "is less than 10% of EBSIO"
-      threshold           = 10
-      unit                = "Percent"
-      metric_name         = "EBSIOBalance%"
-      statistic           = "Average"
-      namespace           = "AWS/RDS"
-      evaluation_periods  = 3
+      description = "is less than 10% of EBSIO"
+      threshold   = 10
+      unit        = "Percent"
+      metric_name = "EBSIOBalance%"
+      statistic   = "Average"
+      namespace   = "AWS/RDS"
+      evaluation_periods = 3
       datapoints_to_alarm = 3
-      comparison_operator = "LessThanThreshold"
+      comparison_statisticoperator = "LessThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
     }
     "warning-ReadLatency" = {
-      description         = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold           = 0.01
-      unit                = "Seconds"
-      metric_name         = "ReadLatency"
-      extended_statistic  = "p90"
-      namespace           = "AWS/RDS"
+      description = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold   = 0.01
+      unit        = "Seconds"
+      metric_name = "ReadLatency"
+      extended_statistic   = "p90"
+      namespace   = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
       }
     }
     "critical-ReadLatency" = {
-      description         = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold           = 0.02
-      unit                = "Seconds"
-      metric_name         = "ReadLatency"
-      extended_statistic  = "p90"
-      namespace           = "AWS/RDS"
+      description = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold   = 0.02
+      unit        = "Seconds"
+      metric_name = "ReadLatency"
+      extended_statistic   = "p90"
+      namespace   = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
     }
-    "warning-WriteLatency" = {
-      description         = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold           = 0.01
-      unit                = "Seconds"
-      metric_name         = "WriteLatency"
-      extended_statistic  = "p90"
-      namespace           = "AWS/RDS"
+      "warning-WriteLatency" = {
+      description = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold   = 0.01
+      unit        = "Seconds"
+      metric_name = "WriteLatency"
+      extended_statistic   = "p90"
+      namespace   = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
       }
     }
     "critical-WriteLatency" = {
-      description         = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
-      threshold           = 0.02
-      unit                = "Seconds"
-      metric_name         = "WriteLatency"
-      extended_statistic  = "p90"
-      namespace           = "AWS/RDS"
+      description = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
+      threshold   = 0.02
+      unit        = "Seconds"
+      metric_name = "WriteLatency"
+      extended_statistic   = "p90"
+      namespace   = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
     }
   }
-  alarms_tmp = merge([
+  alarms_default_tmp = merge([
     for rds_name, values in try(var.rds_parameters, []) : {
       for alarm, value in try(local.alarms_default, {}) :
       "${rds_name}-${alarm}" =>
       merge(
         value,
         {
-          alarm_name         = "${split("/", value.namespace)[1]}-${alarm}-${local.common_name}-${rds_name}"
-          alarm_description  = "Rds[${rds_name}] ${value.description}"
-          actions_enabled    = try(values.alarms_overrides[alarm].actions_enabled, true)
-          evaluation_periods = try(values.alarms_overrides[alarm].evaluation_periods, 5)
-          threshold          = try(values.alarms_overrides[alarm].threshold, value.threshold)
-          period             = try(values.alarms_overrides[alarm].period, 60)
-          treat_missing_data = try(values.alarms_overrides[alarm].treat_missing_data, "notBreaching")
-          dimensions = try(value.dimensions, {
+          alarm_name          = "${split("/", value.namespace)[1]}-${alarm}-${local.common_name}-${rds_name}"
+          alarm_description   = "Rds[${rds_name}] ${value.description}"
+          actions_enabled     = try(values.alarms_overrides[alarm].actions_enabled, true)
+          threshold           = try(values.alarms_overrides[alarm].threshold, value.threshold)
+          unit                = try(values.alarms_overrides[alarm].unit, value.unit)
+          metric_name         = try(values.alarms_overrides[alarm].metric_name, value.metric_name)    
+          evaluation_periods  = try(values.alarms_overrides[alarm].evaluation_periods, value.evaluation_periods, null)
+          datapoints_to_alarm = try(values.alarms_overrides[alarm].datapoints_to_alarm, value.datapoints_to_alarm, null)
+          statistic           = try(values.alarms_overrides[alarm].statistic, value.statistic, null)
+          extended_statistic  = try(values.alarms_overrides[alarm].extended_statistic, value.extended_statistic, null)
+          comparison_operator = try(values.alarms_overrides[alarm].comparison_operator, value.comparison_operator)                    
+          period              = try(values.alarms_overrides[alarm].period, 60)
+          treat_missing_data  = try(values.alarms_overrides[alarm].treat_missing_data, "notBreaching")
+          dimensions          = try(value.dimensions, {
             DBInstanceIdentifier = "${local.common_name}-${rds_name}"
           })
-          ok_actions    = try(value.ok_actions, [])
-          alarm_actions = try(value.alarm_actions, [])
+          ok_actions    = try(values.alarms_overrides[alarm].ok_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
+          alarm_actions = try(values.alarms_overrides[alarm].alarm_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
           alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-rds-name" = "${local.common_name}-${rds_name}" })
       }) if can(var.rds_parameters) && var.rds_parameters != {} && try(values.enable_alarms, false) && !contains(try(values.alarms_disabled, []), alarm)
     }
@@ -159,20 +165,24 @@ locals {
       "${rds_name}-${alarm}" => merge(
         value,
         {
-          alarm_name         = "${split("/", value.namespace)[1]}-${alarm}-${local.common_name}-${rds_name}"
-          alarm_description  = "Rds[${rds_name}] ${value.description}"
-          actions_enabled    = try(value.actions_enabled, true)
-          statistic          = try(value.statistic, null)
-          evaluation_periods = try(value.evaluation_periods, 5)
-          extended_statistic = try(value.extended_statistic, null)
-          threshold          = value.threshold
-          period             = value.period
-          treat_missing_data = try("${value.treat_missing_data}", "notBreaching")
-          dimensions = try(value.dimensions, {
+          alarm_name          = "${split("/", value.namespace)[1]}-${alarm}-${local.common_name}-${rds_name}"
+          alarm_description   = "Rds[${rds_name}] ${value.description}"
+          actions_enabled     = try(value.actions_enabled, true)
+          threshold           = value.threshold
+          unit                = value.unit
+          metric_name         = value.metric_name
+          evaluation_periods  = try(value.evaluation_periods, null)
+          datapoints_to_alarm = try(value.datapoints_to_alarm,null)
+          statistic           = try(value.statistic, null)
+          extended_statistic  = try(value.extended_statistic, null)
+          comparison_operator = value.comparison_operator
+          period              = value.period
+          treat_missing_data  = try("${value.treat_missing_data}", "notBreaching")
+          dimensions          = try(value.dimensions, {
             DBInstanceIdentifier = "${local.common_name}-${rds_name}"
           })
-          ok_actions    = try(value.ok_actions, [])
-          alarm_actions = try(value.alarm_actions, [])
+          ok_actions    = try(value.ok_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
+          alarm_actions = try(value.alarm_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
           alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-rds-name" = "${local.common_name}-${rds_name}" })
         }
       ) if can(var.rds_parameters) && var.rds_parameters != {} && try(values.enable_alarms, false)
@@ -180,7 +190,7 @@ locals {
   ]...)
 
   alarms = merge(
-    local.alarms_tmp,
+    local.alarms_default_tmp,
     local.alarms_custom_tmp
   )
 
@@ -192,12 +202,12 @@ locals {
 /*----------------------------------------------------------------------*/
 
 locals {
-  enable_alarms_notifications = length(local.alarms) > 0 && try(var.rds_defaults.alarms_defaults.enable_alarms_notifications, true) ? 1 : 0
+  enable_alarms_notifications = length(local.alarms) > 0 ? 1 : 0
 }
 
 data "aws_sns_topic" "alarms_sns_topic_name" {
   count = local.enable_alarms_notifications
-  name  = try(var.rds_defaults.alarms_defaults.alarms_sns_topic_name, "${local.default_sns_topic_name}")
+  name  = local.default_sns_topic_name
 }
 
 /*----------------------------------------------------------------------*/
@@ -207,24 +217,24 @@ data "aws_sns_topic" "alarms_sns_topic_name" {
 resource "aws_cloudwatch_metric_alarm" "alarms" {
   for_each = nonsensitive(local.alarms)
 
-  alarm_name          = try(each.value.alarm_name, var.rds_defaults.alarms_defaults.alarm_name)
-  alarm_description   = try(each.value.alarm_description, var.rds_defaults.alarms_defaults.alarm_description, null)
-  actions_enabled     = try(each.value.actions_enabled, var.rds_defaults.alarms_defaults.actions_enabled, true)
-  comparison_operator = try(each.value.comparison_operator, var.rds_defaults.alarms_defaults.comparison_operator, "GreaterThanOrEqualToThreshold")
-  evaluation_periods  = try(each.value.evaluation_periods, var.rds_defaults.alarms_defaults.evaluation_period, 5)
-  datapoints_to_alarm = try(each.value.datapoints_to_alarm, var.rds_defaults.alarms_defautls.datapoints_to_alarm, 5)
-  threshold           = try(each.value.threshold, var.rds_defaults.alarms_defaults.threshold, null)
-  period              = try(each.value.period, var.rds_defaults.alarms_defaults.period, 60)
-  unit                = try(each.value.unit, var.rds_defaults.alarms_defaults.unit, null)
-  namespace           = try(each.value.namespace, var.rds_defaults.alarms_defaults.namespace, null)
-  metric_name         = try(each.value.metric_name, var.rds_defaults.alarms_defaults.metric_name, null)
-  statistic           = try(each.value.statistic, var.rds_defaults.alarms_defaults.statistic, null)
-  extended_statistic  = try(each.value.extended_statistic, var.rds_defaults.alarms_defaults.extended_statistic, null)
-  dimensions          = try(each.value.dimensions, var.rds_defaults.alarms_defaults.dimensions, null)
-  treat_missing_data  = try(each.value.treat_missing_data, var.rds_defaults.alarms_defaults.treat_missing_data, "notBreaching")
+  alarm_name          = each.value.alarm_name
+  alarm_description   = each.value.alarm_description
+  actions_enabled     = each.value.actions_enabled
+  comparison_operator = each.value.comparison_operator
+  evaluation_periods  = each.value.evaluation_periods
+  datapoints_to_alarm = each.value.datapoints_to_alarm
+  threshold           = each.value.threshold
+  period              = each.value.period
+  unit                = each.value.unit
+  namespace           = each.value.namespace
+  metric_name         = each.value.metric_name
+  statistic           = each.value.statistic
+  extended_statistic  = each.value.extended_statistic
+  dimensions          = each.value.dimensions
+  treat_missing_data  = each.value.treat_missing_data
 
-  alarm_actions = try(each.value.alarm_actions, var.rds_defaults.alarms_defaults.alarm_actions, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
-  ok_actions    = try(each.value.ok_actions, var.rds_defaults.alarms_defaults.ok_actions, data.aws_sns_topic.alarms_sns_topic_name[0].arn)
+  alarm_actions = each.value.alarm_actions
+  ok_actions    = each.value.ok_actions
 
   # conflicts with metric_name
   dynamic "metric_query" {
