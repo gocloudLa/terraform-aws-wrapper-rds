@@ -221,7 +221,7 @@ locals {
 }
 
 data "aws_sns_topic" "alarms_sns_topic_name" {
-  count = local.enable_alarms_notifications
+  count = local.enable_alarms_sns_default
   name  = local.default_sns_topic_name
 }
 
@@ -248,7 +248,7 @@ resource "aws_cloudwatch_metric_alarm" "alarms" {
   dimensions          = each.value.dimensions
   treat_missing_data  = each.value.treat_missing_data
 
-  alarm_actions = length(each.value.ok_actions) == 0 ? [data.aws_sns_topic.alarms_sns_topic_name[0].arn] : each.value.alarm_actions
+  alarm_actions = length(each.value.alarm_actions) == 0 ? [data.aws_sns_topic.alarms_sns_topic_name[0].arn] : each.value.alarm_actions
   ok_actions    = length(each.value.ok_actions) == 0 ? [data.aws_sns_topic.alarms_sns_topic_name[0].arn] : each.value.ok_actions
 
   # conflicts with metric_name
