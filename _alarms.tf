@@ -85,7 +85,7 @@ locals {
       }
     }
     "warning-ReadLatency" = {
-      description         = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
+      description         = "ReadLatency p90 above 10 ms for 5 consecutive minutes"
       threshold           = 0.01
       unit                = "Seconds"
       metric_name         = "ReadLatency"
@@ -113,7 +113,7 @@ locals {
       }
     }
     "warning-WriteLatency" = {
-      description         = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
+      description         = "WriteLatency p90 above 10 ms for 5 consecutive minutes"
       threshold           = 0.01
       unit                = "Seconds"
       metric_name         = "WriteLatency"
