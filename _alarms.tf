@@ -8,6 +8,8 @@ locals {
       statistic           = "Average"
       namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = 5
+      datapoints_to_alarm = 5
       alarms_tags = {
         "alarm-level" = "WARN"
       }
@@ -20,6 +22,8 @@ locals {
       statistic           = "Average"
       namespace           = "AWS/RDS"
       comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = 5
+      datapoints_to_alarm = 5
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
@@ -75,7 +79,7 @@ locals {
       namespace                    = "AWS/RDS"
       evaluation_periods           = 3
       datapoints_to_alarm          = 3
-      comparison_statisticoperator = "LessThanThreshold"
+      comparison_operator = "LessThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
       }
@@ -87,6 +91,8 @@ locals {
       metric_name         = "ReadLatency"
       extended_statistic  = "p90"
       namespace           = "AWS/RDS"
+      evaluation_periods  = 5
+      datapoints_to_alarm = 5
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
@@ -99,6 +105,8 @@ locals {
       metric_name         = "ReadLatency"
       extended_statistic  = "p90"
       namespace           = "AWS/RDS"
+      evaluation_periods  = 5
+      datapoints_to_alarm = 5
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
@@ -111,6 +119,8 @@ locals {
       metric_name         = "WriteLatency"
       extended_statistic  = "p90"
       namespace           = "AWS/RDS"
+      evaluation_periods  = 5
+      datapoints_to_alarm = 5
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "WARN"
@@ -123,6 +133,8 @@ locals {
       metric_name         = "WriteLatency"
       extended_statistic  = "p90"
       namespace           = "AWS/RDS"
+      evaluation_periods  = 5
+      datapoints_to_alarm = 5
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
@@ -147,13 +159,13 @@ locals {
           statistic           = try(values.alarms_overrides[alarm].statistic, value.statistic, null)
           extended_statistic  = try(values.alarms_overrides[alarm].extended_statistic, value.extended_statistic, null)
           comparison_operator = try(values.alarms_overrides[alarm].comparison_operator, value.comparison_operator)
-          period              = try(values.alarms_overrides[alarm].period, 60)
+          period              = try(values.alarms_overrides[alarm].period, value.period, 60)
           treat_missing_data  = try(values.alarms_overrides[alarm].treat_missing_data, "notBreaching")
           dimensions = try(value.dimensions, {
             DBInstanceIdentifier = "${local.common_name}-${rds_name}"
           })
-          ok_actions    = try(values.alarms_overrides[alarm].ok_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
-          alarm_actions = try(values.alarms_overrides[alarm].alarm_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
+          ok_actions    = try(values.alarms_overrides[alarm].ok_actions, value.ok_actions, [])
+          alarm_actions = try(values.alarms_overrides[alarm].alarm_actions, value.alarm_actions, [])
           alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-rds-name" = "${local.common_name}-${rds_name}" })
       }) if can(var.rds_parameters) && var.rds_parameters != {} && try(values.enable_alarms, false) && !contains(try(values.alarms_disabled, []), alarm)
     }
@@ -181,8 +193,8 @@ locals {
           dimensions = try(value.dimensions, {
             DBInstanceIdentifier = "${local.common_name}-${rds_name}"
           })
-          ok_actions    = try(value.ok_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
-          alarm_actions = try(value.alarm_actions, data.aws_sns_topic.alarms_sns_topic_name.arn, [])
+          ok_actions    = try(value.ok_actions, [])
+          alarm_actions = try(value.alarm_actions, [])
           alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-rds-name" = "${local.common_name}-${rds_name}" })
         }
       ) if can(var.rds_parameters) && var.rds_parameters != {} && try(values.enable_alarms, false)
@@ -202,7 +214,10 @@ locals {
 /*----------------------------------------------------------------------*/
 
 locals {
-  enable_alarms_notifications = length(local.alarms) > 0 ? 1 : 0
+  enable_alarms_sns_default = anytrue([
+    for _, alarm_value in local.alarms :
+    length(alarm_value.ok_actions) == 0 || length(alarm_value.alarm_actions) == 0
+  ]) ? 1 : 0
 }
 
 data "aws_sns_topic" "alarms_sns_topic_name" {
@@ -233,8 +248,8 @@ resource "aws_cloudwatch_metric_alarm" "alarms" {
   dimensions          = each.value.dimensions
   treat_missing_data  = each.value.treat_missing_data
 
-  alarm_actions = each.value.alarm_actions
-  ok_actions    = each.value.ok_actions
+  alarm_actions = length(each.value.ok_actions) == 0 ? [data.aws_sns_topic.alarms_sns_topic_name[0].arn] : each.value.alarm_actions
+  ok_actions    = length(each.value.ok_actions) == 0 ? [data.aws_sns_topic.alarms_sns_topic_name[0].arn] : each.value.ok_actions
 
   # conflicts with metric_name
   dynamic "metric_query" {
