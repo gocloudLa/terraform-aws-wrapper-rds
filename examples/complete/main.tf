@@ -251,11 +251,12 @@ module "wrapper_rds" {
 
       alarms_overrides = {
         # "warning-CPUUtilization" = {
-        #   "actions_enabled"    = true
-        #   "evaluation_periods" = 2
-        #   "threshold"          = 30
-        #   "period"             = 180
-        #   "treat_missing_data" = "ignore"
+        #   "actions_enabled"     = true
+        #   "evaluation_periods"  = 2
+        #   "datapoints_to_alarm" = 2
+        #   "threshold"           = 30
+        #   "period"              = 180
+        #   "treat_missing_data"  = "ignore"
         # }
       }
 
