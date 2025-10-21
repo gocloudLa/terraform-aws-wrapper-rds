@@ -262,36 +262,70 @@ module "wrapper_rds" {
       #alarms_disabled = ["critical-CPUUtilization", "warning-CPUUtilization"] # if you need to disable an alarm
 
       alarms_custom = {
-        #   "warning-FreeableMemory" = {
-        #     description = "FreeableMemory below 350 MB"
-        #     threshold   = 367001600
-        #     unit        = "Bytes"
-        #     metric_name = "FreeableMemory"
-        #     statistic   = "Average"
-        #     namespace   = "AWS/RDS"
-        #     period      = 60
-        #     evaluation_periods = 15
-        #     datapoints_to_alarm = 15
-        #     comparison_operator = "LessThanThreshold"
-        #     alarms_tags = {
-        #       "alarm-level" = "WARN"
-        #     }
-        #   }
-        #   "critical-FreeableMemory" = {
-        #     description = "FreeableMemory below 250 MB"
-        #     threshold   = 262144000
-        #     unit        = "Bytes"
-        #     metric_name = "FreeableMemory"
-        #     statistic   = "Average"
-        #     namespace   = "AWS/RDS"
-        #     period      = 60
-        #     evaluation_periods = 15
-        #     datapoints_to_alarm = 15
-        #     comparison_operator = "LessThanThreshold"
-        #     alarms_tags = {
-        #       "alarm-level" = "WARN"
-        #     }
-        #   }
+          # "warning-FreeableMemory" = {
+          #   # This alarm helps to monitor low freeable memory which can mean that there is a spike in database connections or that your instance may be under high memory pressure.
+          #   description = "FreeableMemory below 350 MB"
+          #   threshold   = 367001600
+          #   unit        = "Bytes"
+          #   metric_name = "FreeableMemory"
+          #   statistic   = "Average"
+          #   namespace   = "AWS/RDS"
+          #   period      = 60
+          #   evaluation_periods = 15
+          #   datapoints_to_alarm = 15
+          #   comparison_operator = "LessThanThreshold"
+          #   alarms_tags = {
+          #     "alarm-level" = "WARN"
+          #   }
+          # }
+          # "critical-FreeableMemory" = {
+          #   description = "FreeableMemory below 250 MB"
+          #   # This alarm helps to monitor low freeable memory which can mean that there is a spike in database connections or that your instance may be under high memory pressure.
+          #   threshold   = 262144000
+          #   unit        = "Bytes"
+          #   metric_name = "FreeableMemory"
+          #   statistic   = "Average"
+          #   namespace   = "AWS/RDS"
+          #   period      = 60
+          #   evaluation_periods = 15
+          #   datapoints_to_alarm = 15
+          #   comparison_operator = "LessThanThreshold"
+          #   alarms_tags = {
+          #     "alarm-level" = "CRIT"
+          #   }
+          # }
+          # "warning-CPUCreditBalance" = {
+          #   description = "RDS CPUCreditBalance below 12 creditcs"
+          #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. 
+          #   threshold   = 12
+          #   unit        = "Count"
+          #   metric_name = "CPUCreditBalance"
+          #   statistic   = "Average"
+          #   namespace   = "AWS/RDS"
+          #   period      = 60
+          #   evaluation_periods = 3
+          #   datapoints_to_alarm = 3
+          #   comparison_operator = "LessThanThreshold"
+          #   alarms_tags = {
+          #     "alarm-level" = "WARN"
+          #   }
+          # }
+          # "critical-CPUCreditBalance" = {
+          #   description = "RDS CPUCreditBalance below 30 credits"
+          #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started.
+          #   threshold   = 30
+          #   unit        = "Count"
+          #   metric_name = "CPUCreditBalance"
+          #   statistic   = "Average"
+          #   namespace   = "AWS/RDS"
+          #   period      = 60
+          #   evaluation_periods = 3
+          #   datapoints_to_alarm = 3
+          #   comparison_operator = "LessThanThreshold"
+          #   alarms_tags = {
+          #     "alarm-level" = "CRIT"
+          #   }
+          # }
       }
 
       # DEBUG
