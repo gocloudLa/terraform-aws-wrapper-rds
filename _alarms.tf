@@ -1,6 +1,13 @@
+#########################################################################################################################################
+#                                                                                                                                       #
+# Documentation: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Best_Practice_Recommended_Alarms_AWS_Services.html#RDS  #                                                 #
+#                                                                                                                                       #
+#########################################################################################################################################
+
 locals {
   alarms_default = {
-    "warning-CPUUtilization" = {
+    "warning-CPUUtilization" = { 
+      # This alarm is used to detect a high DB load.
       description         = "is using more than 75% of CPU"
       threshold           = 75
       unit                = "Percent"
@@ -15,6 +22,7 @@ locals {
       }
     }
     "critical-CPUUtilization" = {
+      # This alarm is used to detect a high DB load.
       description         = "is using more than 90% of CPU"
       threshold           = 90
       unit                = "Percent"
@@ -29,6 +37,7 @@ locals {
       }
     }
     "warning-EBSByteBalance" = {
+      # This alarm is used to detect a low percentage of throughput credits remaining in the burst bucket (Low byte balance percentage can cause throughput bottleneck issues).
       description         = "is less than 20% of EBSByte"
       threshold           = 20
       unit                = "Percent"
@@ -43,6 +52,7 @@ locals {
       }
     }
     "critical-EBSByteBalance" = {
+      # This alarm is used to detect a low percentage of throughput credits remaining in the burst bucket (Low byte balance percentage can cause throughput bottleneck issues).
       description         = "is less than 10% of EBSByte"
       threshold           = 10
       unit                = "Percent"
@@ -57,6 +67,7 @@ locals {
       }
     }
     "warning-EBSIOBalance" = {
+      # This alarm is used to detect a low percentage of I/O credits remaining in the burst bucket (Low IOPS balance percentage can cause IOPS bottleneck issues).
       description         = "is less than 20% of EBSIO"
       threshold           = 20
       unit                = "Percent"
@@ -71,6 +82,7 @@ locals {
       }
     }
     "critical-EBSIOBalance" = {
+      # This alarm is used to detect a low percentage of I/O credits remaining in the burst bucket (Low IOPS balance percentage can cause IOPS bottleneck issues).
       description                  = "is less than 10% of EBSIO"
       threshold                    = 10
       unit                         = "Percent"
@@ -85,21 +97,8 @@ locals {
       }
     }
     "warning-ReadLatency" = {
+      # This alarm helps to monitor high read latency. If storage latency is high, it's because the workload is exceeding resource limits.
       description         = "ReadLatency p90 above 10 ms for 5 consecutive minutes"
-      threshold           = 0.01
-      unit                = "Seconds"
-      metric_name         = "ReadLatency"
-      extended_statistic  = "p90"
-      namespace           = "AWS/RDS"
-      evaluation_periods  = 5
-      datapoints_to_alarm = 5
-      comparison_operator = "GreaterThanThreshold"
-      alarms_tags = {
-        "alarm-level" = "WARN"
-      }
-    }
-    "critical-ReadLatency" = {
-      description         = "ReadLatency p90 above 20 ms for 5 consecutive minutes"
       threshold           = 0.02
       unit                = "Seconds"
       metric_name         = "ReadLatency"
@@ -109,25 +108,12 @@ locals {
       datapoints_to_alarm = 5
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
-        "alarm-level" = "CRIT"
+        "alarm-level" = "WARN"
       }
     }
     "warning-WriteLatency" = {
+      # This alarm helps to monitor high write latency. If storage latency is high, it's because the workload is exceeding resource limits.
       description         = "WriteLatency p90 above 10 ms for 5 consecutive minutes"
-      threshold           = 0.01
-      unit                = "Seconds"
-      metric_name         = "WriteLatency"
-      extended_statistic  = "p90"
-      namespace           = "AWS/RDS"
-      evaluation_periods  = 5
-      datapoints_to_alarm = 5
-      comparison_operator = "GreaterThanThreshold"
-      alarms_tags = {
-        "alarm-level" = "WARN"
-      }
-    }
-    "critical-WriteLatency" = {
-      description         = "WriteLatency p90 above 20 ms for 5 consecutive minutes"
       threshold           = 0.02
       unit                = "Seconds"
       metric_name         = "WriteLatency"
@@ -137,7 +123,7 @@ locals {
       datapoints_to_alarm = 5
       comparison_operator = "GreaterThanThreshold"
       alarms_tags = {
-        "alarm-level" = "CRIT"
+        "alarm-level" = "WARN"
       }
     }
   }
