@@ -436,10 +436,7 @@ alarms_overrides = {
 <details><summary>Disable specific alarms</summary>
 
 ```hcl
-alarms_disabled = [
-  "critical-CPUUtilization",
-  "warning-CPUUtilization"
-]
+alarms_disabled = ["critical-CPUUtilization", "critical-EBSByteBalance", "critical-EBSIOBalance"]
 ```
 
 
