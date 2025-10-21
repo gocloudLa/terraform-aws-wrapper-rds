@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.0.1...v1.1.0) (2025-10-21)
+
+
+### Features
+
+* **module:** add cw alarms ([#10](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/10)) ([f39e166](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/f39e1661291b1679017cb0df0c9883639d403a7e))
+
 ## [1.0.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.0.0...v1.0.1) (2025-10-11)
 
 
