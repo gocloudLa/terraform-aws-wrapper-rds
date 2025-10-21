@@ -249,6 +249,8 @@ module "wrapper_rds" {
       # ALARMS CONFIGURATION
       enable_alarms = true # Default: false
 
+      alarms_disabled = ["critical-CPUUtilization", "critical-EBSByteBalance", "critical-EBSIOBalance"] # if you need to disable an alarm
+
       alarms_overrides = {
         # "warning-CPUUtilization" = {
         #   "actions_enabled"     = true
@@ -259,8 +261,6 @@ module "wrapper_rds" {
         #   "treat_missing_data"  = "ignore"
         # }
       }
-
-      #alarms_disabled = ["critical-CPUUtilization", "warning-CPUUtilization"] # if you need to disable an alarm
 
       alarms_custom = {
         # "warning-FreeableMemory" = {

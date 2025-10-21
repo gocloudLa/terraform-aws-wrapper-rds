@@ -384,10 +384,7 @@ features:
       - title: Disable specific alarms
         code: |
           ```hcl
-          alarms_disabled = [
-            "critical-CPUUtilization",
-            "warning-CPUUtilization"
-          ]
+          alarms_disabled = ["critical-CPUUtilization", "critical-EBSByteBalance", "critical-EBSIOBalance"]
           ```
 
       - title: Add custom alarms
