@@ -6,7 +6,7 @@
 
 locals {
   alarms_default = {
-    "warning-CPUUtilization" = { 
+    "warning-CPUUtilization" = {
       # This alarm is used to detect a high DB load.
       description         = "is using more than 75% of CPU"
       threshold           = 75
@@ -83,14 +83,14 @@ locals {
     }
     "critical-EBSIOBalance" = {
       # This alarm is used to detect a low percentage of I/O credits remaining in the burst bucket (Low IOPS balance percentage can cause IOPS bottleneck issues).
-      description                  = "is less than 10% of EBSIO"
-      threshold                    = 10
-      unit                         = "Percent"
-      metric_name                  = "EBSIOBalance%"
-      statistic                    = "Average"
-      namespace                    = "AWS/RDS"
-      evaluation_periods           = 3
-      datapoints_to_alarm          = 3
+      description         = "is less than 10% of EBSIO"
+      threshold           = 10
+      unit                = "Percent"
+      metric_name         = "EBSIOBalance%"
+      statistic           = "Average"
+      namespace           = "AWS/RDS"
+      evaluation_periods  = 3
+      datapoints_to_alarm = 3
       comparison_operator = "LessThanThreshold"
       alarms_tags = {
         "alarm-level" = "CRIT"
