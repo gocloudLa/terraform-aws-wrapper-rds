@@ -20,6 +20,8 @@ The Terraform wrapper for RDS simplifies the configuration of the Relational Dat
 
 - 🕰️ [Enrollment of Point in Time Recovery](#enrollment-of-point-in-time-recovery) - Enables Point in Time Recovery backup policy integration
 
+- 🚨 [Alarms Configuration](#alarms-configuration) - Enables and customizes CloudWatch alarms for the databases.
+
 
 
 ### 🔗 External Modules
@@ -388,6 +390,94 @@ This tag allows the resource to be added to a backup policy of the Point in Time
 
 ```hcl
 tags = { ptr-14d = "true" }
+```
+
+
+</details>
+
+
+### Alarms Configuration
+This configuration block allows enabling, customizing, or disabling CloudWatch alarms. By default, alarms are not created 
+
+You can:
+  - Enable alarms globally for the resource (`enable_alarms = true`).
+  - Override default alarm parameters using `alarms_overrides`.
+  - Disable specific default alarms using `alarms_disabled`.
+  - Add completely custom alarms using `alarms_custom`.
+
+
+<details><summary>Enable default alarms</summary>
+
+```hcl
+enable_alarms = true
+```
+
+
+</details>
+
+<details><summary>Override default alarm parameters</summary>
+
+```hcl
+alarms_overrides = {
+  "warning-CPUUtilization" = {
+    "actions_enabled"     = true
+    "evaluation_periods"  = 2
+    "datapoints_to_alarm" = 2
+    "threshold"           = 30
+    "period"              = 180
+    "treat_missing_data"  = "ignore"
+  }
+}
+```
+
+
+</details>
+
+<details><summary>Disable specific alarms</summary>
+
+```hcl
+alarms_disabled = ["critical-CPUUtilization", "critical-EBSByteBalance", "critical-EBSIOBalance"]
+```
+
+
+</details>
+
+<details><summary>Add custom alarms</summary>
+
+```hcl
+alarms_custom = {
+  "warning-FreeableMemory" = {
+    description          = "FreeableMemory below 350 MB"
+    threshold            = 367001600
+    unit                 = "Bytes"
+    metric_name          = "FreeableMemory"
+    statistic            = "Average"
+    namespace            = "AWS/RDS"
+    period               = 60
+    evaluation_periods   = 15
+    datapoints_to_alarm  = 15
+    comparison_operator  = "LessThanThreshold"
+    alarms_tags = {
+      "alarm-level" = "WARN"
+    }
+  }
+
+  "critical-FreeableMemory" = {
+    description          = "FreeableMemory below 250 MB"
+    threshold            = 262144000
+    unit                 = "Bytes"
+    metric_name          = "FreeableMemory"
+    statistic            = "Average"
+    namespace            = "AWS/RDS"
+    period               = 60
+    evaluation_periods   = 15
+    datapoints_to_alarm  = 15
+    comparison_operator  = "LessThanThreshold"
+    alarms_tags = {
+      "alarm-level" = "CRIT"
+    }
+  }
+}
 ```
 
 
