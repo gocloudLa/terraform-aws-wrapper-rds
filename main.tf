@@ -1,11 +1,10 @@
 module "rds" {
   for_each = var.rds_parameters
   source   = "terraform-aws-modules/rds/aws"
-  version  = "6.9.0"
+  version  = "6.13.1"
 
   identifier                     = "${local.common_name}-${each.key}"
   instance_use_identifier_prefix = try(each.value.instance_use_identifier_prefix, var.rds_defaults.instance_use_identifier_prefix, false)
-
   ## master user & password
   username                      = try(each.value.username, var.rds_defaults.username, "root")
   password                      = try(each.value.password, var.rds_defaults.password, "${random_password.this[each.key].result}")
@@ -68,6 +67,7 @@ module "rds" {
   db_instance_tags            = try(each.value.db_instance_tags, var.rds_defaults.db_instance_tags, {})
   custom_iam_instance_profile = try(each.value.custom_iam_instance_profile, var.rds_defaults.custom_iam_instance_profile, null)
   dedicated_log_volume        = try(each.value.dedicated_log_volume, var.rds_defaults.dedicated_log_volume, false)
+  database_insights_mode      = try(each.value.database_insights_mode, var.rds_defaults.database_insights_mode, null)
 
   ## storage
   allocated_storage      = try(each.value.allocated_storage, var.rds_defaults.allocated_storage, 5)

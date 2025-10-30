@@ -1,6 +1,6 @@
 module "lambda_db_management" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "7.19.0"
+  version = "8.1.2"
   # version = "8.0.1" # Upgrade version in next release
 
   count = local.condition_create ? 1 : 0
@@ -65,7 +65,7 @@ resource "aws_lambda_layer_version" "this" {
 
 module "ssm_parameter" {
   source  = "terraform-aws-modules/ssm-parameter/aws"
-  version = "1.1.2"
+  version = "1.2.0"
 
   count = local.condition_create ? 1 : 0
 
@@ -74,6 +74,7 @@ module "ssm_parameter" {
   # values          = try(each.value.values, [])
   type        = "SecureString" #try(each.value.type, null)
   secure_type = true           # try(each.value.secure_type, true)
+  overwrite   = true
   # description     = try(each.value.description, null)
   # tier            = try(each.value.tier, null)
   # key_id          = try(each.value.key_id, null)
@@ -85,12 +86,15 @@ module "ssm_parameter" {
 
 module "eventbridge" {
   source  = "terraform-aws-modules/eventbridge/aws"
-  version = "4.1.0"
+  version = "4.2.2"
 
   count = local.condition_create ? 1 : 0
 
   role_name  = "${var.name}_event"
   create_bus = false
+
+  create_log_delivery_source = false
+  create_log_delivery        = false
 
   rules = {
     "${var.name}" = {
