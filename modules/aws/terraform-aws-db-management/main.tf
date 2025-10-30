@@ -74,6 +74,7 @@ module "ssm_parameter" {
   # values          = try(each.value.values, [])
   type        = "SecureString" #try(each.value.type, null)
   secure_type = true           # try(each.value.secure_type, true)
+  overwrite   = true
   # description     = try(each.value.description, null)
   # tier            = try(each.value.tier, null)
   # key_id          = try(each.value.key_id, null)
@@ -91,6 +92,9 @@ module "eventbridge" {
 
   role_name  = "${var.name}_event"
   create_bus = false
+
+  create_log_delivery_source = false
+  create_log_delivery        = false
 
   rules = {
     "${var.name}" = {

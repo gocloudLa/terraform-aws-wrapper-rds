@@ -136,6 +136,9 @@ module "eventbridge_create_dump" {
   role_name  = "${var.name}_event"
   create_bus = false
 
+  create_log_delivery_source = false
+  create_log_delivery        = false
+
   rules = {
     "${var.name}" = {
       description         = "Run ${var.name} lambda function"
