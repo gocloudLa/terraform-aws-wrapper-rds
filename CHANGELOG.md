@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.0...v1.1.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* **deps:** bump the all-terraform-dependencies group across 4 directories with 6 updates ([#13](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/13)) ([ae1c8a6](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/ae1c8a62b2954ad5e8a746d9a03b3d1a36dcba27))
+
 ## [1.1.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.0.1...v1.1.0) (2025-10-21)
 
 
