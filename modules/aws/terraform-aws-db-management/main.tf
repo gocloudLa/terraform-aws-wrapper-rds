@@ -65,7 +65,7 @@ resource "aws_lambda_layer_version" "this" {
 
 module "ssm_parameter" {
   source  = "terraform-aws-modules/ssm-parameter/aws"
-  version = "1.2.0"
+  version = "2.0.0"
 
   count = local.condition_create ? 1 : 0
 
