@@ -1,6 +1,6 @@
 module "lambda_db_management" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "8.1.2"
+  version = "8.2.0"
   # version = "8.0.1" # Upgrade version in next release
 
   count = local.condition_create ? 1 : 0
@@ -65,7 +65,7 @@ resource "aws_lambda_layer_version" "this" {
 
 module "ssm_parameter" {
   source  = "terraform-aws-modules/ssm-parameter/aws"
-  version = "1.2.0"
+  version = "2.1.0"
 
   count = local.condition_create ? 1 : 0
 
@@ -86,7 +86,7 @@ module "ssm_parameter" {
 
 module "eventbridge" {
   source  = "terraform-aws-modules/eventbridge/aws"
-  version = "4.2.2"
+  version = "4.3.0"
 
   count = local.condition_create ? 1 : 0
 
