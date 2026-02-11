@@ -279,6 +279,11 @@ def update_users_and_grants(data):
                   grant_default_query = f"ALTER DEFAULT PRIVILEGES IN SCHEMA {schema} GRANT {privileges} ON TABLES TO {username}"
                   execute_query(cursor, grant_default_query)
 
+                if table:
+                    # Grant usage on schema when granting table-level privileges
+                    grant_schema_usage = f"GRANT USAGE ON SCHEMA {schema} TO {username}"
+                    execute_query(cursor, grant_schema_usage)
+
                 conn.commit()
                 cursor.close()
                 conn.close()
