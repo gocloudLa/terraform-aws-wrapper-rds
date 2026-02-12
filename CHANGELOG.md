@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.0...v1.1.1) (2026-02-12)
+
+
+### Bug Fixes
+
+* **deps:** bump the all-terraform-dependencies group across 4 directories with 6 updates ([#13](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/13)) ([ae1c8a6](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/ae1c8a62b2954ad5e8a746d9a03b3d1a36dcba27))
+* **lambda-postgres:** add permission to new user for schemas ([#17](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/17)) ([1808e9c](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/1808e9cdcbf13ca8fac3a82902843e25298079c4))
+
 ## [1.1.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.0.1...v1.1.0) (2025-10-21)
 
 
