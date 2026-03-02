@@ -54,7 +54,8 @@ module "db_dump_restore" {
   timeout     = try(each.value.db_dump_restore_timeout, var.rds_defaults.db_dump_restore_timeout, 300)
   memory_size = try(each.value.db_dump_restore_memory_size, var.rds_defaults.db_dump_restore_memory_size, 256)
 
-  cloudwatch_logs_retention_in_days = try(each.value.cloudwatch_logs_retention_in_days, var.rds_defaults.cloudwatch_logs_retention_in_days, 14)
+  cloudwatch_logs_retention_in_days           = try(each.value.cloudwatch_logs_retention_in_days, var.rds_defaults.cloudwatch_logs_retention_in_days, 14)
+  cloudwatch_logs_deletion_protection_enabled = try(each.value.cloudwatch_logs_deletion_protection_enabled, var.rds_defaults.cloudwatch_logs_deletion_protection_enabled, null)
 
   s3_bucket_name = try(each.value.db_dump_restore_s3_bucket_name, var.rds_defaults.db_dump_restore_s3_bucket_name, "")
 

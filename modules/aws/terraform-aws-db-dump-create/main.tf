@@ -1,6 +1,6 @@
 module "lambda_create_dump" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "8.1.2"
+  version = "8.7.0"
 
   count = local.condition_create ? 1 : 0
 
@@ -45,7 +45,8 @@ module "lambda_create_dump" {
   layers      = [aws_lambda_layer_version.this[0].arn]
   source_path = local.lambda_source_path
 
-  cloudwatch_logs_retention_in_days = var.cloudwatch_logs_retention_in_days
+  cloudwatch_logs_retention_in_days           = var.cloudwatch_logs_retention_in_days
+  cloudwatch_logs_deletion_protection_enabled = var.cloudwatch_logs_deletion_protection_enabled
 
   environment_variables = {
     "SECRET_NAME" : "${var.secret_name}"

@@ -21,7 +21,8 @@ module "db_management" {
   timeout     = try(each.value.db_management_timeout, var.rds_defaults.db_management_timeout, 300)
   memory_size = try(each.value.db_management_memory_size, var.rds_defaults.db_management_memory_size, 256)
 
-  cloudwatch_logs_retention_in_days = try(each.value.cloudwatch_logs_retention_in_days, var.rds_defaults.cloudwatch_logs_retention_in_days, 14)
+  cloudwatch_logs_retention_in_days           = try(each.value.cloudwatch_logs_retention_in_days, var.rds_defaults.cloudwatch_logs_retention_in_days, 14)
+  cloudwatch_logs_deletion_protection_enabled = try(each.value.cloudwatch_logs_deletion_protection_enabled, var.rds_defaults.cloudwatch_logs_deletion_protection_enabled, null)
 
   parameters = try(each.value.db_management_parameters, {})
 

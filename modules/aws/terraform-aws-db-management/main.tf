@@ -44,7 +44,8 @@ module "lambda_db_management" {
   layers      = [aws_lambda_layer_version.this[0].arn]
   source_path = local.lambda_source_path
 
-  cloudwatch_logs_retention_in_days = var.cloudwatch_logs_retention_in_days
+  cloudwatch_logs_retention_in_days           = var.cloudwatch_logs_retention_in_days
+  cloudwatch_logs_deletion_protection_enabled = var.cloudwatch_logs_deletion_protection_enabled
 
   environment_variables = {
     "SECRET_NAME" : "${var.secret_name}"
