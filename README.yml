@@ -62,7 +62,7 @@ quick_start: |
 
       ## Definitions for the database engine
       engine               = "mysql"
-      engine_version       = "8.0.37"
+      engine_version       = "8.0.44"
       major_engine_version = "8.0"
       family               = "mysql8.0"
       instance_class       = "db.t3.micro"
@@ -528,6 +528,7 @@ input_table: |
   | create_cloudwatch_log_group | Create log group in CloudWatch. | `bool` | `false` | no |
   | enabled_cloudwatch_logs_exports | Export logs to CloudWatch. | `list` | `[]` | no |
   | cloudwatch_log_group_retention_in_days | Log retention in CloudWatch (days). | `number` | `7` | no |
+  | cloudwatch_logs_deletion_protection_enabled |  Whether to enable deletion protection for the log group. | `bool` | `null` | no |
   | cloudwatch_log_group_kms_key_id | KMS Key ID for the log group in CloudWatch. | `string` | `null` | no |
   | monitoring_role_permissions_boundary | Permission limit for the monitoring role. | `string` | `null` | no |
   | cloudwatch_log_group_skip_destroy | Skip the destruction of the log group in CloudWatch. | `bool` | `null` | no |
