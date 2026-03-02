@@ -30,7 +30,6 @@ The Terraform wrapper for RDS simplifies the configuration of the Relational Dat
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-eventbridge" target="_blank">terraform-aws-modules/eventbridge/aws</a> | 4.3.0 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-eventbridge" target="_blank">terraform-aws-modules/eventbridge/aws</a> | 4.2.2 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-lambda" target="_blank">terraform-aws-modules/lambda/aws</a> | 8.7.0 |
-| <a href="https://github.com/terraform-aws-modules/terraform-aws-lambda" target="_blank">terraform-aws-modules/lambda/aws</a> | 8.1.2 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-rds" target="_blank">terraform-aws-modules/rds/aws</a> | 6.13.1 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-s3-bucket" target="_blank">terraform-aws-modules/s3-bucket/aws</a> | 5.8.2 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-security-group" target="_blank">terraform-aws-modules/security-group/aws</a> | 5.3.1 |
@@ -90,7 +89,7 @@ rds_parameters = {
 
     ## Definitions for the database engine
     engine               = "mysql"
-    engine_version       = "8.0.37"
+    engine_version       = "8.0.44"
     major_engine_version = "8.0"
     family               = "mysql8.0"
     instance_class       = "db.t3.micro"
@@ -588,6 +587,7 @@ alarms_custom = {
 | create_cloudwatch_log_group                            | Create log group in CloudWatch.                                                                  | `bool`         | `false`                                                  | no       |
 | enabled_cloudwatch_logs_exports                        | Export logs to CloudWatch.                                                                       | `list`         | `[]`                                                     | no       |
 | cloudwatch_log_group_retention_in_days                 | Log retention in CloudWatch (days).                                                              | `number`       | `7`                                                      | no       |
+| cloudwatch_logs_deletion_protection_enabled            | Whether to enable deletion protection for the log group.                                         | `bool`         | `null`                                                   | no       |
 | cloudwatch_log_group_kms_key_id                        | KMS Key ID for the log group in CloudWatch.                                                      | `string`       | `null`                                                   | no       |
 | monitoring_role_permissions_boundary                   | Permission limit for the monitoring role.                                                        | `string`       | `null`                                                   | no       |
 | cloudwatch_log_group_skip_destroy                      | Skip the destruction of the log group in CloudWatch.                                             | `bool`         | `null`                                                   | no       |
