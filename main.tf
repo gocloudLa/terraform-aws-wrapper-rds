@@ -6,10 +6,11 @@ module "rds" {
   identifier                     = "${local.common_name}-${each.key}"
   instance_use_identifier_prefix = try(each.value.instance_use_identifier_prefix, var.rds_defaults.instance_use_identifier_prefix, false)
   ## master user & password
-  username                      = try(each.value.username, var.rds_defaults.username, "root")
-  password                      = try(each.value.password, var.rds_defaults.password, "${random_password.this[each.key].result}")
-  manage_master_user_password   = try(each.value.manage_master_user_password, var.rds_defaults.manage_master_user_password, false)
-  master_user_secret_kms_key_id = try(each.value.master_user_secret_kms_key_id, var.rds_defaults.master_user_secret_kms_key_id, null)
+  username                        = try(each.value.username, var.rds_defaults.username, "root")
+  password_wo                     = try(each.value.password_wo, var.rds_defaults.password_wo, var.rds_defaults.password, random_password.this[each.key].result)
+  password_wo_version             = try(each.value.password_wo_version, var.rds_defaults.password_wo_version, each.value.random_password.pass_version, var.rds_defaults.random_password.pass_version, 1)
+  manage_master_user_password     = try(each.value.manage_master_user_password, var.rds_defaults.manage_master_user_password, false)
+  master_user_secret_kms_key_id   = try(each.value.master_user_secret_kms_key_id, var.rds_defaults.master_user_secret_kms_key_id, null)
 
   # Managed Secret Rotation
   manage_master_user_password_rotation                   = try(each.value.manage_master_user_password_rotation, var.rds_defaults.manage_master_user_password_rotation, false)
