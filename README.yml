@@ -445,6 +445,7 @@ input_table: |
   | backup_window | Backup window schedule | `string` | `null` | no |
   | backup_retention_period | Backup retention in days | `number` | `null` | no |
   | apply_immediately | Apply immediately changes that may restart the engine | `bool` | `false` | no |
+  | blue_green_update | Enables low-downtime updates using RDS Blue/Green deployments. | `object({ enabled = optional(bool) })` | `null` | no |
   | performance_insights_enabled | Enable Performance Insights feature | `bool` | `false` | no |
   | performance_insights_retention_period | Performance Insights information retention | `number` | `7` | no |
   | username | The master username of the database | `string` | `root` | no |
