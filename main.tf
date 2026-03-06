@@ -102,7 +102,7 @@ module "rds" {
   allow_major_version_upgrade = try(each.value.allow_major_version_upgrade, var.rds_defaults.allow_major_version_upgrade, false)
   auto_minor_version_upgrade  = try(each.value.auto_minor_version_upgrade, var.rds_defaults.auto_minor_version_upgrade, true)
   apply_immediately           = try(each.value.apply_immediately, var.rds_defaults.apply_immediately, false)
-  blue_green_update           = try(each.value.blue_green_update, var.rds_defaults.blue_green_update, {})
+  blue_green_update           = try(each.value.blue_green_update, var.rds_defaults.blue_green_update, null)
 
   ## monitoring
   create_monitoring_role                 = try(each.value.create_monitoring_role, var.rds_defaults.create_monitoring_role, true)
