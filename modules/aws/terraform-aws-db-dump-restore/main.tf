@@ -44,7 +44,7 @@ module "lambda_restore_dump" {
   }
   ignore_source_code_hash      = true
   trigger_on_package_timestamp = false
-  
+
   layers      = [aws_lambda_layer_version.this[0].arn]
   source_path = local.lambda_source_path
 
