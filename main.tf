@@ -1,13 +1,14 @@
 module "rds" {
   for_each = var.rds_parameters
   source   = "terraform-aws-modules/rds/aws"
-  version  = "6.13.1"
+  version  = "7.1.0"
 
   identifier                     = "${local.common_name}-${each.key}"
   instance_use_identifier_prefix = try(each.value.instance_use_identifier_prefix, var.rds_defaults.instance_use_identifier_prefix, false)
   ## master user & password
   username                      = try(each.value.username, var.rds_defaults.username, "root")
-  password                      = try(each.value.password, var.rds_defaults.password, "${random_password.this[each.key].result}")
+  password_wo                   = try(each.value.password_wo, var.rds_defaults.password_wo, var.rds_defaults.password, random_password.this[each.key].result)
+  password_wo_version           = try(each.value.password_wo_version, var.rds_defaults.password_wo_version, each.value.random_password.pass_version, var.rds_defaults.random_password.pass_version, 1)
   manage_master_user_password   = try(each.value.manage_master_user_password, var.rds_defaults.manage_master_user_password, false)
   master_user_secret_kms_key_id = try(each.value.master_user_secret_kms_key_id, var.rds_defaults.master_user_secret_kms_key_id, null)
 
@@ -101,7 +102,7 @@ module "rds" {
   allow_major_version_upgrade = try(each.value.allow_major_version_upgrade, var.rds_defaults.allow_major_version_upgrade, false)
   auto_minor_version_upgrade  = try(each.value.auto_minor_version_upgrade, var.rds_defaults.auto_minor_version_upgrade, true)
   apply_immediately           = try(each.value.apply_immediately, var.rds_defaults.apply_immediately, false)
-  blue_green_update           = try(each.value.blue_green_update, var.rds_defaults.blue_green_update, {})
+  blue_green_update           = try(each.value.blue_green_update, var.rds_defaults.blue_green_update, null)
 
   ## monitoring
   create_monitoring_role                 = try(each.value.create_monitoring_role, var.rds_defaults.create_monitoring_role, true)
