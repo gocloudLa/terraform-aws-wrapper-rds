@@ -119,7 +119,7 @@ module "wrapper_rds" {
 
     "mysql-00" = {
 
-      engine_version       = "8.0.37"
+      engine_version       = "8.0.44"
       major_engine_version = "8.0"
       engine               = "mysql"
       family               = "mysql8.0"
