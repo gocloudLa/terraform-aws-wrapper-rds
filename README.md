@@ -32,7 +32,7 @@ The Terraform wrapper for RDS simplifies the configuration of the Relational Dat
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-rds" target="_blank">terraform-aws-modules/rds/aws</a> | 7.1.0 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-s3-bucket" target="_blank">terraform-aws-modules/s3-bucket/aws</a> | 5.10.0 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-security-group" target="_blank">terraform-aws-modules/security-group/aws</a> | 5.3.1 |
-| <a href="https://github.com/terraform-aws-modules/terraform-aws-ssm-parameter" target="_blank">terraform-aws-modules/ssm-parameter/aws</a> | 1.2.0 |
+| <a href="https://github.com/terraform-aws-modules/terraform-aws-ssm-parameter" target="_blank">terraform-aws-modules/ssm-parameter/aws</a> | 2.1.0 |
 
 
 
