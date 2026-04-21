@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.2...v1.1.3) (2026-04-21)
+
+
+### Bug Fixes
+
+* **example:** change period and evaluations in CPUCreditBalance alarm ([#23](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/23)) ([682be06](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/682be06d7200101dd95d2f1b2a001062ae387a3b))
+
 ## [1.1.2](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.1...v1.1.2) (2026-03-06)
 
 
