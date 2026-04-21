@@ -297,7 +297,7 @@ module "wrapper_rds" {
         # }
         # "warning-CPUCreditBalance" = {
         #   description = "RDS CPUCreditBalance below 12 creditcs"
-        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. 
+        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. The min period you can use in this metric is 300 seconds (5 min).
         #   threshold   = 12
         #   unit        = "Count"
         #   metric_name = "CPUCreditBalance"
@@ -313,7 +313,7 @@ module "wrapper_rds" {
         # }
         # "critical-CPUCreditBalance" = {
         #   description = "RDS CPUCreditBalance below 30 credits"
-        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started.
+        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. The min period you can use in this metric is 300 seconds (5 min).
         #   threshold   = 30
         #   unit        = "Count"
         #   metric_name = "CPUCreditBalance"
