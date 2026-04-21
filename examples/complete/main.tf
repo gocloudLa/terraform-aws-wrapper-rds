@@ -303,8 +303,8 @@ module "wrapper_rds" {
         #   metric_name = "CPUCreditBalance"
         #   statistic   = "Average"
         #   namespace   = "AWS/RDS"
-        #   period      = 60
-        #   evaluation_periods = 3
+        #   period      = 300
+        #   evaluation_periods = 4
         #   datapoints_to_alarm = 3
         #   comparison_operator = "LessThanThreshold"
         #   alarms_tags = {
