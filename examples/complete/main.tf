@@ -17,6 +17,7 @@ module "wrapper_rds" {
 
       subnet_ids = data.aws_subnets.public.ids # Default: ""
       # subnet_name         = "${local.common_name_prefix}-public*" # Default: "${local.common_name_prefix}-private*"
+      # security_group_name = "${local.common_name_prefix}-shared-default" # Default: "${local.common_name_prefix}-default"
       publicly_accessible = true
       ingress_with_cidr_blocks = [
         {

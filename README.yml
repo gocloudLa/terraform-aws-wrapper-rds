@@ -437,6 +437,7 @@ input_table: |
   | publicly_accessible | Enable internet access | `bool` | `false` | no |
   | subnet_ids | List of subnets on which the resource is deployed | `list` | `[]` | no |
   | subnet_name | Wildcard to find the subnets where to deploy engine and lambdas | `string` | `"${local.common_name_prefix}-private*"` | no |
+  | security_group_name | Name of the default security group used by DB helper lambdas | `string` | `"${local.common_name_prefix}-default"` | no |
   | ingress_with_cidr_blocks | Inbound rules for the resource | `list` | `[{ rule = "mysql-tcp", cidr_blocks = "172.1.0.0/16" }]` | no |
   | allocated_storage | Minimum instance storage | `number` | `5` | no |
   | max_allocated_storage | Maximum instance storage | `number` | `10` | no |
