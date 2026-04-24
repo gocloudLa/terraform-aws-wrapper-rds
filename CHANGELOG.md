@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.3...v1.2.0) (2026-04-24)
+
+
+### Features
+
+* **sg:** add custom security_group_name support ([#25](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/25)) ([ab255b7](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/ab255b7cbfea3b2209b751d5a699d4f54314e01d))
+
 ## [1.1.3](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.2...v1.1.3) (2026-04-21)
 
 
