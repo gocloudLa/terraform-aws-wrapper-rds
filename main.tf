@@ -92,7 +92,7 @@ module "rds" {
   backup_window                    = try(each.value.backup_window, var.rds_defaults.backup_window, null)
   delete_automated_backups         = try(each.value.delete_automated_backups, var.rds_defaults.delete_automated_backups, true)
   restore_to_point_in_time         = try(each.value.restore_to_point_in_time, var.rds_defaults.restore_to_point_in_time, null)
-  final_snapshot_identifier_prefix = try(each.value.final_snapshot_identifier_prefix, var.rds_defaults.final_snapshot_identifier_prefix, null)
+  final_snapshot_identifier_prefix = try(each.value.final_snapshot_identifier_prefix, var.rds_defaults.final_snapshot_identifier_prefix, "final")
   skip_final_snapshot              = try(each.value.skip_final_snapshot, var.rds_defaults.skip_final_snapshot, true)
   copy_tags_to_snapshot            = true
 
