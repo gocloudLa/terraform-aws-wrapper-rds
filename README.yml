@@ -437,6 +437,7 @@ input_table: |
   | publicly_accessible | Enable internet access | `bool` | `false` | no |
   | subnet_ids | List of subnets on which the resource is deployed | `list` | `[]` | no |
   | subnet_name | Wildcard to find the subnets where to deploy engine and lambdas | `string` | `"${local.common_name_prefix}-private*"` | no |
+  | security_group_name | Name of the default security group used by DB helper lambdas | `string` | `"${local.common_name_prefix}-default"` | no |
   | ingress_with_cidr_blocks | Inbound rules for the resource | `list` | `[{ rule = "mysql-tcp", cidr_blocks = "172.1.0.0/16" }]` | no |
   | allocated_storage | Minimum instance storage | `number` | `5` | no |
   | max_allocated_storage | Maximum instance storage | `number` | `10` | no |
@@ -445,6 +446,7 @@ input_table: |
   | backup_window | Backup window schedule | `string` | `null` | no |
   | backup_retention_period | Backup retention in days | `number` | `null` | no |
   | apply_immediately | Apply immediately changes that may restart the engine | `bool` | `false` | no |
+  | blue_green_update | Enables low-downtime updates using RDS Blue/Green deployments. | `object({ enabled = optional(bool) })` | `null` | no |
   | performance_insights_enabled | Enable Performance Insights feature | `bool` | `false` | no |
   | performance_insights_retention_period | Performance Insights information retention | `number` | `7` | no |
   | username | The master username of the database | `string` | `root` | no |

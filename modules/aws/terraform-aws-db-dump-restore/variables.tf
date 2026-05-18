@@ -72,6 +72,12 @@ variable "cloudwatch_logs_retention_in_days" {
   default     = 14
 }
 
+variable "cloudwatch_logs_deletion_protection_enabled" {
+  description = "Whether to enable deletion protection for the Lambda CloudWatch log group."
+  type        = bool
+  default     = null
+}
+
 variable "secret_name" {
   type        = string
   description = "Name of the secret holding the database connection."

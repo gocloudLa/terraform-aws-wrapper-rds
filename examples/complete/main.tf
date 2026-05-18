@@ -17,6 +17,7 @@ module "wrapper_rds" {
 
       subnet_ids = data.aws_subnets.public.ids # Default: ""
       # subnet_name         = "${local.common_name_prefix}-public*" # Default: "${local.common_name_prefix}-private*"
+      # security_group_name = "${local.common_name_prefix}-shared-default" # Default: "${local.common_name_prefix}-default"
       publicly_accessible = true
       ingress_with_cidr_blocks = [
         {
@@ -119,7 +120,7 @@ module "wrapper_rds" {
 
     "mysql-00" = {
 
-      engine_version       = "8.0.37"
+      engine_version       = "8.0.44"
       major_engine_version = "8.0"
       engine               = "mysql"
       family               = "mysql8.0"
@@ -297,14 +298,14 @@ module "wrapper_rds" {
         # }
         # "warning-CPUCreditBalance" = {
         #   description = "RDS CPUCreditBalance below 12 creditcs"
-        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. 
+        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. The min period you can use in this metric is 300 seconds (5 min).
         #   threshold   = 12
         #   unit        = "Count"
         #   metric_name = "CPUCreditBalance"
         #   statistic   = "Average"
         #   namespace   = "AWS/RDS"
-        #   period      = 60
-        #   evaluation_periods = 3
+        #   period      = 300
+        #   evaluation_periods = 4
         #   datapoints_to_alarm = 3
         #   comparison_operator = "LessThanThreshold"
         #   alarms_tags = {
@@ -313,14 +314,14 @@ module "wrapper_rds" {
         # }
         # "critical-CPUCreditBalance" = {
         #   description = "RDS CPUCreditBalance below 30 credits"
-        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started.
+        #   # This alarm helps to monitor the number of earned CPU credits that an instance has accrued since it was launched or started. The min period you can use in this metric is 300 seconds (5 min).
         #   threshold   = 30
         #   unit        = "Count"
         #   metric_name = "CPUCreditBalance"
         #   statistic   = "Average"
         #   namespace   = "AWS/RDS"
-        #   period      = 60
-        #   evaluation_periods = 3
+        #   period      = 300
+        #   evaluation_periods = 4
         #   datapoints_to_alarm = 3
         #   comparison_operator = "LessThanThreshold"
         #   alarms_tags = {

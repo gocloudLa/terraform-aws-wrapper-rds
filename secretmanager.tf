@@ -19,7 +19,7 @@ resource "aws_secretsmanager_secret_version" "secret_val" {
     "engine" : "${module.rds[each.key].db_instance_engine}",
     "host" : try(each.value.dns_records[""].zone_name, "") != "" ? "${local.common_name}-${each.key}.rds.${each.value.dns_records[""].zone_name}" : "${module.rds[each.key].db_instance_address}",
     "username" : "${module.rds[each.key].db_instance_username}",
-    "password" : "${try(each.value.password, var.rds_defaults.password, random_password.this[each.key].result)}",
+    "password" : "${try(each.value.password_wo, var.rds_defaults.password_wo, random_password.this[each.key].result)}",
     "dbname" : "",
     "port" : "${module.rds[each.key].db_instance_port}"
     "rds_host" : "${module.rds[each.key].db_instance_address}",
