@@ -28,9 +28,9 @@ The Terraform wrapper for RDS simplifies the configuration of the Relational Dat
 | Name | Version |
 |------|------:|
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-eventbridge" target="_blank">terraform-aws-modules/eventbridge/aws</a> | 4.3.0 |
-| <a href="https://github.com/terraform-aws-modules/terraform-aws-lambda" target="_blank">terraform-aws-modules/lambda/aws</a> | 8.7.0 |
-| <a href="https://github.com/terraform-aws-modules/terraform-aws-rds" target="_blank">terraform-aws-modules/rds/aws</a> | 7.1.0 |
-| <a href="https://github.com/terraform-aws-modules/terraform-aws-s3-bucket" target="_blank">terraform-aws-modules/s3-bucket/aws</a> | 5.10.0 |
+| <a href="https://github.com/terraform-aws-modules/terraform-aws-lambda" target="_blank">terraform-aws-modules/lambda/aws</a> | 8.8.0 |
+| <a href="https://github.com/terraform-aws-modules/terraform-aws-rds" target="_blank">terraform-aws-modules/rds/aws</a> | 7.2.0 |
+| <a href="https://github.com/terraform-aws-modules/terraform-aws-s3-bucket" target="_blank">terraform-aws-modules/s3-bucket/aws</a> | 5.14.0 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-security-group" target="_blank">terraform-aws-modules/security-group/aws</a> | 5.3.1 |
 | <a href="https://github.com/terraform-aws-modules/terraform-aws-ssm-parameter" target="_blank">terraform-aws-modules/ssm-parameter/aws</a> | 1.2.0 |
 
