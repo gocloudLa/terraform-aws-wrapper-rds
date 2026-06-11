@@ -95,6 +95,12 @@ variable "parameters" {
   description = ""
 }
 
+variable "parameter_store_tier" {
+  type        = string
+  description = "The tier of the SSM parameter. Valid values: Standard, Advanced, Intelligent-Tiering."
+  default     = "Standard"
+}
+
 # LOGS NOTIFICATIONS
 variable "enable_logs_notifications" {
   type        = bool
