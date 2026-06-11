@@ -78,7 +78,7 @@ module "ssm_parameter" {
   type        = "SecureString"
   secure_type = true
   overwrite   = true
-  tier        = var.parameter_store_tier
+  tier        = var.tier
   # description     = try(each.value.description, null)
   # key_id          = try(each.value.key_id, null)
   # allowed_pattern = try(each.value.allowed_pattern, null)
