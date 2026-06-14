@@ -169,6 +169,7 @@ rds_defaults = var.rds_defaults
 ### User and Database Management
 Deploy a lambda function that manages the creation and modification of *Users*, *Databases*, and their access to them.
 The credentials for the accesses will be stored in a parameter of **Parameter Store**.
+The Parameter Store tier can be configured with `db_management_parameter_store_tier` (`Standard`, `Advanced`, or `Intelligent-Tiering`; default: `Standard`).
 Send notifications of the actions taken.
 Does not remove databases or users; the latter will remain without permissions on the resources.
 
@@ -181,6 +182,7 @@ rds_parameters = {
     ...
     enable_db_management                    = true
     enable_db_management_logs_notifications = true
+    # db_management_parameter_store_tier      = "Standard" # Standard, Advanced, Intelligent-Tiering
     db_management_parameters = {
       databases = [
         {
@@ -243,6 +245,7 @@ rds_parameters = {
     ...
     enable_db_management                    = true
     enable_db_management_logs_notifications = true
+    # db_management_parameter_store_tier      = "Standard" # Standard, Advanced, Intelligent-Tiering
     db_management_parameters = {
       databases = [
         {
