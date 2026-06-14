@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.2.1...v1.3.0) (2026-06-14)
+
+
+### Features
+
+* **db-managment:** add parameter store tier variable ([#36](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/36)) ([c3ca5bf](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/c3ca5bf457fc144f8fae12c2eeea4f86c59feb7d))
+
 ## [1.2.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.2.0...v1.2.1) (2026-05-18)
 
 
