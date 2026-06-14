@@ -1,6 +1,6 @@
 module "lambda_db_management" {
   source  = "terraform-aws-modules/lambda/aws"
-  version = "8.7.0"
+  version = "8.8.0"
   # version = "8.0.1" # Upgrade version in next release
 
   count = local.condition_create ? 1 : 0
