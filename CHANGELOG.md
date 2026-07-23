@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.2.1...v1.3.0) (2026-06-14)
+
+
+### Features
+
+* **db-managment:** add parameter store tier variable ([#36](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/36)) ([c3ca5bf](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/c3ca5bf457fc144f8fae12c2eeea4f86c59feb7d))
+
+## [1.2.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.2.0...v1.2.1) (2026-05-18)
+
+
+### Bug Fixes
+
+* update final_snapshot_identifier_prefix variable ([#31](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/31)) ([db0916c](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/db0916c5062d5a9ad75baa6b40b4b769d73e69df))
+
 ## [1.2.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.1.3...v1.2.0) (2026-04-24)
 
 
