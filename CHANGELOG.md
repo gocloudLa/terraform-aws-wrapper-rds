@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.3.0...v1.3.1) (2026-07-30)
+
+
+### Bug Fixes
+
+* **dump:** change type in for each s3_dump_objects module ([#27](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/27)) ([fae8aaa](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/fae8aaa2c6d39876bd34612ba3161ea006572b0b))
+
 ## [1.3.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.2.1...v1.3.0) (2026-06-14)
 
 
