@@ -257,6 +257,7 @@ module "wrapper_rds" {
       alarms_overrides = {
         # "warning-CPUUtilization" = {
         #   "actions_enabled"     = true
+        #   "description"         = "Custom descripcion for CPUUtilization alarm"
         #   "evaluation_periods"  = 2
         #   "datapoints_to_alarm" = 2
         #   "threshold"           = 30
