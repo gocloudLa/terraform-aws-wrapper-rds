@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.3.1...v1.4.0) (2026-07-31)
+
+
+### Features
+
+* **alarms:** add custom alarm description ([#38](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/38)) ([0a327eb](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/0a327eb525557f5e29b32c0b8ab4c98a31e28bff))
+
 ## [1.3.1](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.3.0...v1.3.1) (2026-07-30)
 
 
