@@ -1,7 +1,7 @@
 module "rds" {
   for_each = var.rds_parameters
   source   = "terraform-aws-modules/rds/aws"
-  version  = "7.1.0"
+  version  = "7.2.0"
 
   identifier                     = "${local.common_name}-${each.key}"
   instance_use_identifier_prefix = try(each.value.instance_use_identifier_prefix, var.rds_defaults.instance_use_identifier_prefix, false)
