@@ -1,7 +1,7 @@
 module "rds" {
   for_each = var.rds_parameters
   source   = "terraform-aws-modules/rds/aws"
-  version  = "7.1.0"
+  version  = "7.2.1"
 
   identifier                     = "${local.common_name}-${each.key}"
   instance_use_identifier_prefix = try(each.value.instance_use_identifier_prefix, var.rds_defaults.instance_use_identifier_prefix, false)
@@ -68,7 +68,7 @@ module "rds" {
   db_instance_tags            = try(each.value.db_instance_tags, var.rds_defaults.db_instance_tags, {})
   custom_iam_instance_profile = try(each.value.custom_iam_instance_profile, var.rds_defaults.custom_iam_instance_profile, null)
   dedicated_log_volume        = try(each.value.dedicated_log_volume, var.rds_defaults.dedicated_log_volume, false)
-  database_insights_mode      = try(each.value.database_insights_mode, var.rds_defaults.database_insights_mode, null)
+  customer_owned_ip_enabled   = try(each.value.customer_owned_ip_enabled, var.rds_defaults.customer_owned_ip_enabled, null)
 
   ## storage
   allocated_storage      = try(each.value.allocated_storage, var.rds_defaults.allocated_storage, 5)
@@ -111,7 +111,8 @@ module "rds" {
   monitoring_role_use_name_prefix        = try(each.value.monitoring_role_use_name_prefix, var.rds_defaults.monitoring_role_use_name_prefix, false)
   monitoring_role_description            = try(each.value.monitoring_role_description, var.rds_defaults.monitoring_role_description, null)
   monitoring_interval                    = try(each.value.monitoring_interval, var.rds_defaults.monitoring_interval, 0)
-  performance_insights_enabled           = try(each.value.performance_insights_enabled, var.rds_defaults.performance_insights_enabled, false)
+  database_insights_mode                 = try(each.value.database_insights_mode, var.rds_defaults.database_insights_mode, "standard")
+  performance_insights_enabled           = try(each.value.performance_insights_enabled, var.rds_defaults.performance_insights_enabled, true)
   performance_insights_retention_period  = try(each.value.performance_insights_retention_period, var.rds_defaults.performance_insights_retention_period, 7)
   performance_insights_kms_key_id        = try(each.value.performance_insights_kms_key_id, var.rds_defaults.performance_insights_kms_key_id, null)
   create_cloudwatch_log_group            = try(each.value.create_cloudwatch_log_group, var.rds_defaults.create_cloudwatch_log_group, false)
