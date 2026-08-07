@@ -4,243 +4,243 @@ module "wrapper_rds" {
   metadata = local.metadata
 
   rds_parameters = {
-    # "mariadb-00" = {
+    "mariadb-00" = {
 
-    #   engine               = "mariadb"
-    #   engine_version       = "11.4"
-    #   major_engine_version = "11.4"
-    #   family               = "mariadb11.4"
-    #   # DEBUG
-    #   deletion_protection = false
-    #   apply_immediately   = true
-    #   skip_final_snapshot = true
+      engine               = "mariadb"
+      engine_version       = "11.4"
+      major_engine_version = "11.4"
+      family               = "mariadb11.4"
+      # DEBUG
+      deletion_protection = false
+      apply_immediately   = true
+      skip_final_snapshot = true
 
-    #   subnet_ids = data.aws_subnets.public.ids # Default: ""
-    #   # subnet_name         = "${local.common_name_prefix}-public*" # Default: "${local.common_name_prefix}-private*"
-    #   # security_group_name = "${local.common_name_prefix}-shared-default" # Default: "${local.common_name_prefix}-default"
-    #   publicly_accessible = true
-    #   ingress_with_cidr_blocks = [
-    #     {
-    #       rule        = "mysql-tcp"
-    #       cidr_blocks = "0.0.0.0/0"
-    #     }
-    #   ]
+      subnet_ids = data.aws_subnets.public.ids # Default: ""
+      # subnet_name         = "${local.common_name_prefix}-public*" # Default: "${local.common_name_prefix}-private*"
+      # security_group_name = "${local.common_name_prefix}-shared-default" # Default: "${local.common_name_prefix}-default"
+      publicly_accessible = true
+      ingress_with_cidr_blocks = [
+        {
+          rule        = "mysql-tcp"
+          cidr_blocks = "0.0.0.0/0"
+        }
+      ]
 
-    #   dns_records = {
-    #     "" = {
-    #       # zone_name    = local.zone_private
-    #       # private_zone = true
-    #       # DEBUG
-    #       zone_name    = local.zone_public
-    #       private_zone = false
-    #     }
-    #   }
-    #   parameters = [
-    #     {
-    #       name  = "max_connections"
-    #       value = "150"
-    #     }
-    #   ]
-    #   maintenance_window      = "Sun:04:00-Sun:06:00"
-    #   backup_window           = "03:00-03:30"
-    #   backup_retention_period = "7"
+      dns_records = {
+        "" = {
+          # zone_name    = local.zone_private
+          # private_zone = true
+          # DEBUG
+          zone_name    = local.zone_public
+          private_zone = false
+        }
+      }
+      parameters = [
+        {
+          name  = "max_connections"
+          value = "150"
+        }
+      ]
+      maintenance_window      = "Sun:04:00-Sun:06:00"
+      backup_window           = "03:00-03:30"
+      backup_retention_period = "7"
 
-    #   ## ENABLE DB BACKUP TO S3
-    #   enable_db_dump_create = true
-    #   # db_dump_create_local_path_custom_scripts = "${path.module}/content/custom_sql"
-    #   db_dump_create_schedule_expression = "cron(0 * * * ? *)"
-    #   db_dump_create_db_name             = "mydb1"
-    #   db_dump_create_retention_in_days   = 7
-    #   db_dump_create_s3_arn_permission_accounts = [
-    #     "arn:aws:iam::565219270600:root", # Replace with the actual 12-digit ID of your AWS account.
-    #     # "arn:aws:iam::xxxxxxxxxxx:root",
-    #   ]
+      ## ENABLE DB BACKUP TO S3
+      enable_db_dump_create = true
+      # db_dump_create_local_path_custom_scripts = "${path.module}/content/custom_sql"
+      db_dump_create_schedule_expression = "cron(0 * * * ? *)"
+      db_dump_create_db_name             = "mydb1"
+      db_dump_create_retention_in_days   = 7
+      db_dump_create_s3_arn_permission_accounts = [
+        "arn:aws:iam::565219270600:root", # Replace with the actual 12-digit ID of your AWS account.
+        # "arn:aws:iam::xxxxxxxxxxx:root",
+      ]
 
-    #   ## ENABLE DB RESTORE FROM S3
-    #   # enable_db_dump_restore = true
-    #   # db_dump_restore_s3_bucket_name = "gcl-l04-core-00-db-dump-create"
-    #   # db_dump_restore_db_name = "gocloud"
+      ## ENABLE DB RESTORE FROM S3
+      # enable_db_dump_restore = true
+      # db_dump_restore_s3_bucket_name = "gcl-l04-core-00-db-dump-create"
+      # db_dump_restore_db_name = "gocloud"
 
-    #   # DB MANAGEMENT
-    #   enable_db_management                    = true
-    #   enable_db_management_logs_notifications = true
-    #   # db_management_logs_notifications_lambda_name = "dmc-prd-notifications"
-    #   # db_management_parameter_store_tier = "Standard" # Standard, Advanced, Intelligent-Tiering
-    #   db_management_parameters = {
-    #     databases = [
-    #       {
-    #         name    = "mydb1"
-    #         charset = "utf8mb4"
-    #         collate = "utf8mb4_general_ci"
-    #       },
-    #       {
-    #         name    = "mydb2"
-    #         charset = "utf8mb4"
-    #         collate = "utf8mb4_general_ci"
-    #       },
-    #       {
-    #         name    = "mydb3"
-    #         charset = "utf8mb4"
-    #         collate = "utf8mb4_general_ci"
-    #       }
-    #     ],
-    #     users = [
-    #       {
-    #         username = "user1"
-    #         host     = "%"
-    #         password = "password1"
-    #         grants = [
-    #           {
-    #             database   = "mydb1"
-    #             table      = "*"
-    #             privileges = "ALL"
-    #           },
-    #           {
-    #             database   = "mydb2"
-    #             table      = "*"
-    #             privileges = "SELECT, UPDATE"
-    #           }
-    #         ]
-    #       },
-    #       {
-    #         username = "user2"
-    #         host     = "%"
-    #         password = "password2"
-    #         grants = [
-    #           {
-    #             database   = "mydb2"
-    #             table      = "*"
-    #             privileges = "ALL"
-    #           }
-    #         ]
-    #       }
-    #     ],
-    #     excluded_users = ["rdsadmin", "root", "mariadb.sys", "healthcheck", "rds_superuser_role", "mysql.infoschema", "mysql.session", "mysql.sys"]
-    #   }
-    # }
+      # DB MANAGEMENT
+      enable_db_management                    = true
+      enable_db_management_logs_notifications = true
+      # db_management_logs_notifications_lambda_name = "dmc-prd-notifications"
+      # db_management_parameter_store_tier = "Standard" # Standard, Advanced, Intelligent-Tiering
+      db_management_parameters = {
+        databases = [
+          {
+            name    = "mydb1"
+            charset = "utf8mb4"
+            collate = "utf8mb4_general_ci"
+          },
+          {
+            name    = "mydb2"
+            charset = "utf8mb4"
+            collate = "utf8mb4_general_ci"
+          },
+          {
+            name    = "mydb3"
+            charset = "utf8mb4"
+            collate = "utf8mb4_general_ci"
+          }
+        ],
+        users = [
+          {
+            username = "user1"
+            host     = "%"
+            password = "password1"
+            grants = [
+              {
+                database   = "mydb1"
+                table      = "*"
+                privileges = "ALL"
+              },
+              {
+                database   = "mydb2"
+                table      = "*"
+                privileges = "SELECT, UPDATE"
+              }
+            ]
+          },
+          {
+            username = "user2"
+            host     = "%"
+            password = "password2"
+            grants = [
+              {
+                database   = "mydb2"
+                table      = "*"
+                privileges = "ALL"
+              }
+            ]
+          }
+        ],
+        excluded_users = ["rdsadmin", "root", "mariadb.sys", "healthcheck", "rds_superuser_role", "mysql.infoschema", "mysql.session", "mysql.sys"]
+      }
+    }
 
-    # "mysql-00" = {
+    "mysql-00" = {
 
-    #   engine_version       = "8.0.44"
-    #   major_engine_version = "8.0"
-    #   engine               = "mysql"
-    #   family               = "mysql8.0"
+      engine_version       = "8.0.44"
+      major_engine_version = "8.0"
+      engine               = "mysql"
+      family               = "mysql8.0"
 
-    #   # Monitoring & logs
-    #   enabled_cloudwatch_logs_exports = ["error", "slowquery"]
+      # Monitoring & logs
+      enabled_cloudwatch_logs_exports = ["error", "slowquery"]
 
-    #   maintenance_window      = "Sun:04:00-Sun:06:00"
-    #   backup_window           = "03:00-03:30"
-    #   backup_retention_period = "7"
-    #   apply_immediately       = true
+      maintenance_window      = "Sun:04:00-Sun:06:00"
+      backup_window           = "03:00-03:30"
+      backup_retention_period = "7"
+      apply_immediately       = true
 
-    #   # DEBUG
-    #   deletion_protection = false
-    #   subnet_ids          = data.aws_subnets.private.ids
-    #   publicly_accessible = false
-    #   ingress_with_cidr_blocks = [
-    #     {
-    #       rule        = "mysql-tcp"
-    #       cidr_blocks = "0.0.0.0/0"
-    #     }
-    #   ]
+      # DEBUG
+      deletion_protection = false
+      subnet_ids          = data.aws_subnets.private.ids
+      publicly_accessible = false
+      ingress_with_cidr_blocks = [
+        {
+          rule        = "mysql-tcp"
+          cidr_blocks = "0.0.0.0/0"
+        }
+      ]
 
-    #   dns_records = {
-    #     "" = {
-    #       zone_name    = local.zone_private
-    #       private_zone = true
-    #     }
-    #   }
+      dns_records = {
+        "" = {
+          zone_name    = local.zone_private
+          private_zone = true
+        }
+      }
 
-    #   db_parameter_group_parameters = [
-    #     {
-    #       name         = "connect_timeout"
-    #       value        = 120
-    #       apply_method = "immediate"
-    #       }, {
-    #       name         = "general_log"
-    #       value        = 0
-    #       apply_method = "immediate"
-    #       }, {
-    #       name         = "innodb_lock_wait_timeout"
-    #       value        = 300
-    #       apply_method = "immediate"
-    #       }, {
-    #       name         = "log_output"
-    #       value        = "FILE"
-    #       apply_method = "pending-reboot"
-    #       }, {
-    #       name         = "long_query_time"
-    #       value        = 5
-    #       apply_method = "immediate"
-    #       }, {
-    #       name         = "max_connections"
-    #       value        = 150
-    #       apply_method = "immediate"
-    #       }, {
-    #       name         = "slow_query_log"
-    #       value        = 1
-    #       apply_method = "immediate"
-    #       }, {
-    #       name         = "log_bin_trust_function_creators"
-    #       value        = 1
-    #       apply_method = "immediate"
-    #     }
-    #   ]
+      db_parameter_group_parameters = [
+        {
+          name         = "connect_timeout"
+          value        = 120
+          apply_method = "immediate"
+          }, {
+          name         = "general_log"
+          value        = 0
+          apply_method = "immediate"
+          }, {
+          name         = "innodb_lock_wait_timeout"
+          value        = 300
+          apply_method = "immediate"
+          }, {
+          name         = "log_output"
+          value        = "FILE"
+          apply_method = "pending-reboot"
+          }, {
+          name         = "long_query_time"
+          value        = 5
+          apply_method = "immediate"
+          }, {
+          name         = "max_connections"
+          value        = 150
+          apply_method = "immediate"
+          }, {
+          name         = "slow_query_log"
+          value        = 1
+          apply_method = "immediate"
+          }, {
+          name         = "log_bin_trust_function_creators"
+          value        = 1
+          apply_method = "immediate"
+        }
+      ]
 
-    #   # DB MANAGEMENT
-    #   enable_db_management                    = true
-    #   enable_db_management_logs_notifications = true
-    #   # db_management_parameter_store_tier = "Standard" # Standard, Advanced, Intelligent-Tiering
-    #   db_management_parameters = {
-    #     databases = [
-    #       {
-    #         name    = "sqldb1"
-    #         charset = "utf8mb4"
-    #         collate = "utf8mb4_general_ci"
-    #       },
-    #       {
-    #         name    = "sqlsdb2"
-    #         charset = "utf8mb4"
-    #         collate = "utf8mb4_general_ci"
-    #       }
-    #     ],
-    #     users = [
-    #       {
-    #         username = "usuario1"
-    #         host     = "%"
-    #         password = "password1"
-    #         grants = [
-    #           {
-    #             database   = "sqldb1"
-    #             table      = "*"
-    #             privileges = "ALL"
-    #           },
-    #           {
-    #             database   = "sqlsdb2"
-    #             table      = "*"
-    #             privileges = "SELECT, UPDATE"
-    #           }
-    #         ]
-    #       },
-    #       {
-    #         username = "usuario2"
-    #         host     = "%"
-    #         password = "password2"
-    #         grants = [
-    #           {
-    #             database   = "sqlsdb2"
-    #             table      = "*"
-    #             privileges = "ALL"
-    #           }
-    #         ]
-    #       }
-    #     ],
-    #     excluded_users = ["rdsadmin", "root", "mariadb.sys", "healthcheck", "rds_superuser_role", "mysql.infoschema", "mysql.session", "mysql.sys"]
-    #   }
-    # }
+      # DB MANAGEMENT
+      enable_db_management                    = true
+      enable_db_management_logs_notifications = true
+      # db_management_parameter_store_tier = "Standard" # Standard, Advanced, Intelligent-Tiering
+      db_management_parameters = {
+        databases = [
+          {
+            name    = "sqldb1"
+            charset = "utf8mb4"
+            collate = "utf8mb4_general_ci"
+          },
+          {
+            name    = "sqlsdb2"
+            charset = "utf8mb4"
+            collate = "utf8mb4_general_ci"
+          }
+        ],
+        users = [
+          {
+            username = "usuario1"
+            host     = "%"
+            password = "password1"
+            grants = [
+              {
+                database   = "sqldb1"
+                table      = "*"
+                privileges = "ALL"
+              },
+              {
+                database   = "sqlsdb2"
+                table      = "*"
+                privileges = "SELECT, UPDATE"
+              }
+            ]
+          },
+          {
+            username = "usuario2"
+            host     = "%"
+            password = "password2"
+            grants = [
+              {
+                database   = "sqlsdb2"
+                table      = "*"
+                privileges = "ALL"
+              }
+            ]
+          }
+        ],
+        excluded_users = ["rdsadmin", "root", "mariadb.sys", "healthcheck", "rds_superuser_role", "mysql.infoschema", "mysql.session", "mysql.sys"]
+      }
+    }
 
-    "pgsql-01" = {
+    "pgsql-00" = {
 
       engine               = "postgres"
       engine_version       = "16"
@@ -250,7 +250,7 @@ module "wrapper_rds" {
       port = "5432"
 
       # ALARMS CONFIGURATION
-      enable_alarms = false # Default: false
+      enable_alarms = true # Default: false
 
       alarms_disabled = ["critical-CPUUtilization", "critical-EBSByteBalance", "critical-EBSIOBalance"] # if you need to disable an alarm
 
@@ -369,7 +369,7 @@ module "wrapper_rds" {
 
       # DB MANAGEMENT
       enable_db_management                    = true
-      enable_db_management_logs_notifications = false
+      enable_db_management_logs_notifications = true
       # db_management_parameter_store_tier = "Standard" # Standard, Advanced, Intelligent-Tiering
       db_management_parameters = {
         databases = [
