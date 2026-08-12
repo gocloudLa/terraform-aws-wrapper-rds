@@ -37,7 +37,8 @@ module "wrapper_rds" {
       }
 
       # DATABASE INSIGHTS isnt supported for instances types: db.t2.micro, db.t2.small, db.t3.micro, db.t3.small, db.t4g.micro, db.t4g.small
-      performance_insights_enabled = false
+      performance_insights_enabled          = false
+      performance_insights_retention_period = null
 
       parameters = [
         {
@@ -157,7 +158,8 @@ module "wrapper_rds" {
       }
 
       # DATABASE INSIGHTS isnt supported for instances types: db.t2.micro, db.t2.small, db.t3.micro, db.t3.small, db.t4g.micro, db.t4g.small
-      performance_insights_enabled = false
+      performance_insights_enabled          = false
+      performance_insights_retention_period = null
 
       db_parameter_group_parameters = [
         {
