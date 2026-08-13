@@ -36,10 +36,6 @@ module "wrapper_rds" {
         }
       }
 
-      # DATABASE INSIGHTS isnt supported for instances types: db.t2.micro, db.t2.small, db.t3.micro, db.t3.small, db.t4g.micro, db.t4g.small
-      performance_insights_enabled          = false
-      performance_insights_retention_period = null
-
       parameters = [
         {
           name  = "max_connections"
@@ -156,10 +152,6 @@ module "wrapper_rds" {
           private_zone = true
         }
       }
-
-      # DATABASE INSIGHTS isnt supported for instances types: db.t2.micro, db.t2.small, db.t3.micro, db.t3.small, db.t4g.micro, db.t4g.small
-      performance_insights_enabled          = false
-      performance_insights_retention_period = null
 
       db_parameter_group_parameters = [
         {
@@ -341,6 +333,11 @@ module "wrapper_rds" {
         #   }
         # }
       }
+
+      # Database Insights - standard mode (free, 7 days retention)
+      database_insights_mode                = "standard" # Default = null
+      performance_insights_enabled          = true       # Default = null
+      performance_insights_retention_period = 7          # Default = null
 
       # DEBUG
       deletion_protection = false
