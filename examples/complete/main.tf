@@ -35,6 +35,7 @@ module "wrapper_rds" {
           private_zone = false
         }
       }
+
       parameters = [
         {
           name  = "max_connections"
@@ -332,6 +333,11 @@ module "wrapper_rds" {
         #   }
         # }
       }
+
+      # Database Insights - standard mode (free, 7 days retention)
+      database_insights_mode                = "standard" # Default = null
+      performance_insights_enabled          = true       # Default = null
+      performance_insights_retention_period = 7          # Default = null
 
       # DEBUG
       deletion_protection = false
