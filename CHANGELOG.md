@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.4.0...v1.5.0) (2026-08-14)
+
+
+### Features
+
+* **module:** update version and add database insights in readme ([#41](https://github.com/gocloudLa/terraform-aws-wrapper-rds/issues/41)) ([89a0eef](https://github.com/gocloudLa/terraform-aws-wrapper-rds/commit/89a0eef37c8bdc0e30c0b87dc99aef04178127b9))
+
 ## [1.4.0](https://github.com/gocloudLa/terraform-aws-wrapper-rds/compare/v1.3.1...v1.4.0) (2026-07-31)
 
 
