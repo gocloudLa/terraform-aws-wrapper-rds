@@ -3,7 +3,7 @@ module "rds" {
   source   = "terraform-aws-modules/rds/aws"
   version  = "7.2.1"
 
-  identifier                     = "${local.common_name}-${each.key}"
+  identifier                     = try(each.value.identifier, var.rds_defaults.identifier, "${local.common_name}-${each.key}")
   instance_use_identifier_prefix = try(each.value.instance_use_identifier_prefix, var.rds_defaults.instance_use_identifier_prefix, false)
   ## master user & password
   username                      = try(each.value.username, var.rds_defaults.username, "root")
@@ -55,7 +55,7 @@ module "rds" {
   instance_class              = try(each.value.instance_class, var.rds_defaults.instance_class, "db.t3.micro")
   port                        = try(each.value.port, var.rds_defaults.port, 3306)
   db_name                     = try(each.value.db_name, var.rds_defaults.db_name, null)
-  vpc_security_group_ids      = [module.security_group_rds[each.key].security_group_id]
+  vpc_security_group_ids      = local.rds_vpc_security_group_ids[each.key]
   network_type                = try(each.value.network_type, var.rds_defaults.network_type, null)
   availability_zone           = try(each.value.availability_zone, var.rds_defaults.availability_zone, null)
   multi_az                    = try(each.value.multi_az, var.rds_defaults.multi_az, false)

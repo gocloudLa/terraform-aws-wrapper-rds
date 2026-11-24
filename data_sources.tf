@@ -30,6 +30,6 @@ data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.this[each.key].id
 
   tags = {
-    Name = try(each.value.security_group_name, local.default_security_group_name)
+    Name = try(each.value.defalut_security_group_name, local.default_security_group_name)
   }
 }
